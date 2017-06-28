@@ -11,7 +11,7 @@ public class DBConn2 {
 	public static Connection getCon() throws Exception{
 		if (con == null) {
 			Class.forName("org.mariadb.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/iot_test", "root", "rjqnrdl82");
+			con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/iot_test", "root", "realsng1!");
 		}
 		return con;
 	}
