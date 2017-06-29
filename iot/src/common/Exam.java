@@ -3,8 +3,11 @@ package common;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Scanner;
 
 public class Exam {
 
@@ -14,13 +17,15 @@ public class Exam {
 			Connection con = DBConn2.getCon();// DB와 연결하는 메소드
 			String sql = "select id,pwd,name from user";
 			if (!name.equals("")) {
-				sql += "where NAME ='" + name + "'";
+				sql += "where NAME =?";
 			}
 			PreparedStatement prestmt = con.prepareStatement(sql);// DB에서의 하얀 창
-																	// 아직 실행 X
+			if(!name.equals("")){
+				prestmt.setString(1, name);
+			}
 			ResultSet rs = prestmt.executeQuery();// 실행
 			while (rs.next()) {
-				userlist.add(rs.getString(1) + "," + rs.getString(2) + "," + rs.getString(3));
+				userlist.add(rs.getString(1) + "," + rs.getString(2) + "," + rs.getString(3)+ ","+rs.getInt(4));
 			}
 			DBConn2.closeCon();// 연결 끊기
 			return userlist;
@@ -33,15 +38,30 @@ public class Exam {
 	public boolean insertUser() {
 		try {
 			Connection con = DBConn2.getCon();
-			String sql = "insert into user(id,pwd,name,age) values('blue','blue','청길동',40)";
+			Scanner scan = new Scanner(System.in);
+			HashMap<String, String>hm = new HashMap<String, String>();
+			System.out.println("id를 입력해주세요");
+			hm.put("id", scan.nextLine());
+			System.out.println("pwd를 입력해주세요");
+			hm.put("pwd", scan.nextLine());
+			System.out.println("name를 입력해주세요");
+			hm.put("name", scan.nextLine());
+			System.out.println("나이를 입력해주세요");
+			hm.put("age", scan.nextLine());
+			
+			String sql = "insert into user(id,pwd,name,age) values(?,?,?,?)";
 			PreparedStatement prestmt = con.prepareStatement(sql);
+			prestmt.setString(1, hm.get("id"));
+			prestmt.setString(2, hm.get("pwd"));
+			prestmt.setString(3, hm.get("name"));
+			prestmt.setString(4, hm.get("age"));
 			int result = prestmt.executeUpdate();
 			DBConn2.closeCon();
-			if (result == 1) {
+			if (result > 0) {
 				return true;
 			}
 
-		} catch (Exception e) {
+		} catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 		return false;
@@ -69,16 +89,16 @@ public class Exam {
 
 	public static void main(String[] args) {
 		Exam e = new Exam();
-		if (e.insertUser()) {
-			System.out.println("잘 들어갔네요 유저테이블에");
-		}
-		boolean isDel = e.deleteUser(1);
-		if (isDel) {
-			System.out.println("유저테이블에 잘 삭제가 되었네요!");
-		}
-		List<String> userlist = e.getUserIDLists("");
-		for (int i = 0; i < userlist.size(); i++) {
-			System.out.println(userlist.get(i));
+//		if (e.insertUser()) {
+//			System.out.println("잘 들어갔네요 유저테이블에");
+//		}
+//		boolean isDel = e.deleteUser(1);
+//		if (isDel) {
+//			System.out.println("유저테이블에 잘 삭제가 되었네요!");
+//		}
+		List<String> userList = e.getUserIDLists("blackgildong");
+		for (int i = 0; i < userList.size(); i++) {
+			System.out.println(userList.get(i));
 
 		}
 
