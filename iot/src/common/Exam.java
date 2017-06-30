@@ -35,7 +35,7 @@ public class Exam {
 		return null;
 	}
 
-	public boolean doinsertUser(sql) {
+	public boolean doinsertUser() {
 		try {
 			Connection con = DBConn2.getCon();
 			Scanner scan = new Scanner(System.in);
