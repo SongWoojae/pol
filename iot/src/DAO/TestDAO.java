@@ -98,8 +98,8 @@ public class TestDAO {
 		for(Map m : list){
 			System.out.println(m);
 		}
-		
-//		boolean isDel = tdao.deleteTest(6);
+//		
+//		boolean isDel = tdao.deleteTest(1);
 //		if (isDel) {
 //			System.out.println("유저테이블에 잘 삭제가 되었네요!");
 //		}
