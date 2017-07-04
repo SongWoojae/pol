@@ -17,89 +17,91 @@ public class BoardDAO {
 	// 모두 단일 작업임으로 한개의 함수마다 commit이 이러우져야 하며
 	// 만약 에러날경우 rollback이 되면 됩니다.
 	Connection con;
-	public void setConnection() throws ClassNotFoundException, SQLException{
+
+	public void setConnection() throws ClassNotFoundException, SQLException {
 		con = DBConn2.getCon();
 	}
-	
-	public boolean insertBoard() {
+
+	public boolean insertBoard() throws SQLException {
 		String sql = "insert into board(title, content, writer, reg_Date)values('게시판제목3','게시판내용3',5,now())";
-		try{
-			Statement st = con.createStatement();
-			int result = st.executeUpdate(sql);
-			if(result==1){
-				con.commit();
-				st.close();
-				st = null;
-				return true;
-			}
-		}catch(Exception e){
-			try {
-				con.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
+
+		Statement st = con.createStatement();
+		int result = st.executeUpdate(sql);
+		if (result == 1) {
+			st.close();
+			st = null;
+			return true;
 		}
 		return false;
 	}
-	public List<Map> selectBoard(){
-		List<Map> boardList = new ArrayList<Map>();
-		try{
-			String sql = "select * from board";
-			PreparedStatement ps = con.prepareStatement(sql);
-			
-			ResultSet rs = ps.executeQuery();
-			while(rs.next()){
-				Map hm = new HashMap();
-				hm.put("num",rs.getString("num"));
-				hm.put("title",rs.getString("title"));
-				hm.put("content",rs.getString("content"));
-				hm.put("writer",rs.getString("writer"));
-				hm.put("reg_Date",rs.getString("reg_Date"));
-			}
-			DBConn2.closeCon();
-			return boardList;
-		}catch(Exception e){
-			e.printStackTrace();
+
+	public List<Map> selectBoard() throws SQLException {
+		String sql = "select num, title, content, writer from board";
+		PreparedStatement ps = con.prepareStatement(sql);
+
+		ResultSet rs = ps.executeQuery();
+		List boardList = new ArrayList();
+		while (rs.next()) {
+			HashMap hm = new HashMap();
+			hm.put("num", rs.getString("num"));
+			hm.put("title", rs.getString("title"));
+			hm.put("content", rs.getString("content"));
+			hm.put("writer", rs.getString("writer"));
+			boardList.add(hm);
 		}
-		return null;
+		rs.close();
+		rs = null;
+		ps.close();
+		ps = null;
+		return boardList;
 	}
-	
-	public boolean updateBoard() throws SQLException{
+
+	public boolean updateBoard() throws SQLException {
 		String sql = "update board set title='으하하하하' where num='2'";
 		Statement st = con.createStatement();
 		int result = st.executeUpdate(sql);
-		if(result==1){
+		if (result == 1) {
 			st.close();
 			st = null;
 			return true;
 		}
 		return false;
 	}
-	
-	public boolean deleteBoard() throws SQLException{
+
+	public boolean deleteBoard() throws SQLException {
 		String sql = "delete from board where num = 32";
 		Statement st = con.createStatement();
 		int result = st.executeUpdate(sql);
-		if(result==1){
+		if (result == 1) {
 			st.close();
 			st = null;
 			return true;
 		}
 		return false;
 	}
-	
-	public static void main(String[] args){
+
+	public static void main(String[] args) {
 		BoardDAO bdao = new BoardDAO();
 		try {
 			bdao.setConnection();
-			bdao.insertBoard();
-			bdao.updateBoard();
-			bdao.selectBoard();
-			bdao.deleteBoard();
-			
-			System.out.println("정상동작 했고 저장까지 완료 했수다!!");
+			List<Map> boardList = bdao.selectBoard();
+			CommentDAO dao = new CommentDAO();
+			for (Map m : boardList) {
+				System.out.println(m);
+				List<Map> commentList = dao.getCommentList(Integer.parseInt("num"));
+				for (Map m2 : commentList) {
+					System.out.println(m2);
+				}
+			}
+
+			// bdao.insertBoard();
+			// bdao.updateBoard();
+			// bdao.selectBoard();
+			// bdao.deleteBoard();
+
+			// System.out.println("정상동작 했고 저장까지 완료 했수다!!");
 		} catch (ClassNotFoundException | SQLException e) {
-			
+
 			e.printStackTrace();
 		}
 	}
