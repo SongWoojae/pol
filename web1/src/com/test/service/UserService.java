@@ -2,8 +2,13 @@ package com.test.service;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 
 import com.test.common.DBConn2;
 
@@ -26,6 +31,7 @@ public class UserService {
 
 			int result = ps.executeUpdate();
 			if (result == 1) {
+				con.commit();
 				return true;
 			}
 
@@ -97,6 +103,41 @@ public class UserService {
 			}
 		}
 		return true;
+	}
+	public List<Map> selectUser(HashMap<String, String> hm){
+		Connection con = null;
+		PreparedStatement ps = null;
+		try {
+			String sql = "select user_num, user_id, user_pwd, user_name, class_num from user_info";
+			if(hm.get("name")!=null){
+				sql += " where user_name like ?";
+			}
+			con = DBConn2.getCon();
+			ps = con.prepareStatement(sql);
+			if(hm.get("name")!=null){
+				ps.setString(1, hm.get("name"));
+			}
+			ResultSet rs = ps.executeQuery();
+			List userList = new ArrayList();
+			while(rs.next()){
+				HashMap hm1 = new HashMap();
+				hm1.put("user_name", rs.getString("user_name"));
+				userList.add(hm1);
+			}
+			return userList;
+		}catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				ps.close();
+				DBConn2.closeCon();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
 	}
 
 }

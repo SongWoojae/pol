@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>---표 만들기---</title>
 </head>
 <script>
 	function drawMatrix() {
@@ -14,7 +14,7 @@
 		for (var i = 0; i <= num1; i++) {
 			tableStr += "<tr>"
 			for (var j = 0; j <= num2; j++) {
-				tableStr += "<td>"+"</td>"
+				tableStr += "<td>"+ i + "," +j + "</td>"
 				
 			}
 			tableStr += "</tr>"
@@ -33,10 +33,10 @@
 			onclick="drawMatrix()" /></td>
 
 	</table>
-	<div id = "result_div"></div>
+<div id="result_div"></div>
 <script>
-var obj = document.getElementById("result_div");
-obj.innerHTML="<font color = 'red'>"빨강글씨</font>";
+	var obj = document.getElementById("result_div");
+	obj.innerHTML="<font color = 'red'>"빨강글씨</font>";
 </script>
 
 </body>
