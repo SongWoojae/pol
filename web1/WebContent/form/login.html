@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script>
+function checkLogin(){
+	var idObj = document.getElementById("id");
+	var passObj = document.getElementById("pwd"); 
+	
+	if(idObj.value==""){
+		alert("아이디를 확인하고 다시 시도해주세요");
+		idObj.focus();
+		return false;	
+	}
+	if(passObj.value==""){
+		passObj.focus();
+		alert("비밀번호를 확인하고 다시 시도해주세요")
+		return false;
+	}
+	return true;
+}
+function changeColor(){
+	var colorObj = document.getElementById("s_color"); 
+	var idObj = document.getElementById("id");
+	var passObj = document.getElementById("pwd"); 
+	passObj.style="color:" + colorObj.value;
+	
+	var textObj = document.getElementById("txt"); 
+	idObj.style="color:" + colorObj.value;
+	textObj.style="color:" + colorObj.value;
+	
+	//style="color: #C0C0C0;"
+	var dateObj = document.getElementById("date"); 
+	dateObj.style="color:" + colorObj.value;
+	var emailObj = document.getElementById("email"); 
+	emailObj.style="color:" + colorObj.value;
+	var radioObj = document.getElementById("radio"); 	
+	var chObj = document.getElementById("ch"); 
+	var btnObj = document.getElementById("btn"); 
+	
+}
+
+</script>
+<body>
+<form align="center" method="get" action="test.user" onsubmit="return checkLogin()" >
+아이디 : <input type="text" name="id" id="id"/><br/>
+비밀번호 : <input type="password" name="pwd" id="pwd"/>
+<input type="submit" value="로그인"/><br/>
+색상선택 : <input type="color"  name="s_color"  id="s_color" onchange="changeColor()"/><br/>
+텍스트 : <input type="text" name="txt"	id="txt"/>
+<input  type="submit" value="go" name="button" id="btn"/><br/>
+일자 : <input type="date" name="s_date" id="date"/>
+이메일 : <input type="email" name="t_email" id="email"/><br/>
+라디오 : <input type="radio" name="s_radio"/>1 <input type="radio" name="s_radio"/>2<br/>
+체크박스 : <input type="checkbox" name="ch"/>1 <input type="checkbox" name="ch"/>2<br/>
+리셋 : <input type="reset" name="r=btn" value="리셋"/>
+</form>
+
+</body>
+</html>
