@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script>
+function checkValue(){
+	var titleObj = document.getElementById("title");
+	if(titlObj.value.trim()==""){
+		alert("제목을 입력하세요!");
+		return false;
+	}
+	return true;
+}
+</script>
+<body>
+<form method="get" action="1.board" onsubmit="return checkValue()">
+수정 할 게시글 번호 : <input type="text" name="board_num" id="board_num"/><br/>
+제목 : <input type="text" name="title" id="title"/><br/>
+내용 : <input type="text" name="content" id="content"/><br/>
+유저 번호 : <input type="text" name="user_num" id="user_num"/>
+<input type="submit" value="수정하기"/>
+<input type="hidden" name="command" id="command" value="UPDATE"/>
+</form>
+</body>
+</html>

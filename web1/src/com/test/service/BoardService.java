@@ -11,22 +11,20 @@ import java.util.Map;
 
 import com.test.common.DBConn2;
 
-public class UserService {
+public class BoardService {
 	Connection con = null;
 	PreparedStatement ps = null;
 
-	public boolean insertUser(HashMap<String, String> hm) {
+	public boolean insertBoard(HashMap<String, String> hm) {
 		try {
 			con = DBConn2.getCon();
-			String sql = "insert into user_info(user_id,user_pwd, user_name, class_num, age)";
-			sql += "values(?,?,?,?,?)";
+			String sql = "insert into board(title,content,user_num)";
+			sql += "values(?,?,?)";
 
 			ps = con.prepareStatement(sql);
-			ps.setString(1, hm.get("id"));
-			ps.setString(2, hm.get("pwd"));
-			ps.setString(3, hm.get("name"));
-			ps.setString(4, hm.get("class_num"));
-			ps.setString(5, hm.get("age"));
+			ps.setString(1, hm.get("title"));
+			ps.setString(2, hm.get("content"));
+			ps.setString(3, hm.get("user_num"));
 
 			int result = ps.executeUpdate();
 			if (result == 1) {
@@ -49,10 +47,10 @@ public class UserService {
 		return true;
 	}
 
-	public boolean deleteUser(int num) {
+	public boolean deleteBoard(int num) {
 		try {
 			con = DBConn2.getCon();
-			String sql = "delete from user_info where user_num = ?";
+			String sql = "delete from board where board_num= ? ";
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, num);
 
@@ -74,23 +72,29 @@ public class UserService {
 			}
 		}
 		return true;
+
 	}
 
-	public boolean updateUser(HashMap<String, String> hm) {
+	public boolean updateBoard(HashMap<String, String> hm) {
 		try {
-			String sql = "update user_info set user_name= ?, class_num= ?, age = ? where user_num= ?";
+
+			con = DBConn2.getCon();
+
+			String sql = "update board set title=?, content=?, user_num=? where board_num=?";
 			ps = con.prepareStatement(sql);
 
-			ps.setString(1, hm.get("name"));
-			ps.setString(2, hm.get("class_num"));
-			ps.setString(3, hm.get("age"));
-			ps.setString(4, hm.get("user_num"));
+			ps.setString(1, hm.get("title"));
+			ps.setString(2, hm.get("content"));
+			ps.setString(3, hm.get("user_num"));
+			ps.setString(4, hm.get("board_num"));
 
 			int result = ps.executeUpdate();
 			if (result == 1) {
 				con.commit();
 				return true;
 			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -104,27 +108,25 @@ public class UserService {
 		return true;
 	}
 
-	public List<Map> selectUser(HashMap<String, String> hm) {
-		Connection con = null;
-		PreparedStatement ps = null;
+	public List<Map> selectBoard(HashMap<String, String> hm) {
 		try {
-			String sql = "select user_num, user_id, user_pwd, user_name, class_num from user_info";
-			if (hm.get("name") != null) {
-				sql += " where user_name like ?";
+			String sql = "select title,content,user_num for board";
+			if (hm.get("title") != null) {
+				sql += "where board like ?";
 			}
 			con = DBConn2.getCon();
 			ps = con.prepareStatement(sql);
-			if (hm.get("name") != null) {
-				ps.setString(1, hm.get("name"));
+			if (hm.get("title") != null) {
+				ps.setString(1, hm.get("title"));
 			}
 			ResultSet rs = ps.executeQuery();
-			List userList = new ArrayList();
+			List boardList = new ArrayList();
 			while (rs.next()) {
 				HashMap hm1 = new HashMap();
-				hm1.put("user_name", rs.getString("user_name"));
-				userList.add(hm1);
+				hm1.put("board_num", rs.getString("board_num"));
+				boardList.add(hm1);
 			}
-			return userList;
+			return boardList;
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
