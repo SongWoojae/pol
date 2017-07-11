@@ -21,10 +21,10 @@ public class UserServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		
 		
-		String name1 = req.getParameter("name");
-		String pass1 = req.getParameter("pass");
-		
-		System.out.println("아이디 : "+ name1 + "  비밀번호 " + pass1);
+//		String name1 = req.getParameter("name");
+//		String pass1 = req.getParameter("pass");
+//		
+//		System.out.println("아이디 : "+ name1 + "  비밀번호 " + pass1);
 	
 		
 		// html화면에서 던진 값을 각각 String 변수로 받기 시작
@@ -68,13 +68,19 @@ public class UserServlet extends HttpServlet {
 		} else if (command.equals("DELETE")) {
 			String user_num = req.getParameter("user_num");
 			System.out.println("삭제할 번호 : " + user_num);
+			HashMap hm = new HashMap();
+			hm.put("user_num", user_num);
+			boolean isDelete = us.deleteUser(hm);
+			String result = "";
 
-			if (us.deleteUser(Integer.parseInt(user_num))) {
-
-				doProcess(resq, "= 삭제 완료 =");
+			if (isDelete) {
+				result = "삭제 완료 되었습니다.";
+				//doProcess(resq, "= 삭제 완료 =");
 			} else {
-				doProcess(resq, "값 다시 입력");
+				result = "삭제 실패하였습니다.";
+				//doProcess(resq, "값 다시 입력");
 			}
+			doProcess(resq, result);
 
 		} else if (command.equals("UPDATE")) {
 			
@@ -111,10 +117,38 @@ public class UserServlet extends HttpServlet {
 				hm.put("name", "%" + name + "%");
 			}
 			List<Map> userList = us.selectUser(hm);
-			String result = "";
+			String result = "<script>";
+			
+			result += "function deleteUser(userNum){";
+			result += "location.href='delete_user.user?command=DELETE&user_num=' + userNum;";
+			result += "}";
+			result += "</script>";
+			result += "<form action='/test_web/sign.user'>";
+			result += "이름 : <input type='text' name='name' id='name'/><input type='submit' value='검색'/>";
+			result += "<input type='hidden' name='command' value='SELECT'/>";
+			result += "</form>";
+			result += "<table border='1'>";
+			result += "<tr>";
+			result += "<td>유저번호</td>";
+			result += "<td>유저아이디</td>";
+			result += "<td>유저비밀번호</td>";
+			result += "<td>유저이름</td>";
+			result += "<td>클래스번호</td>";
+			result += "<td>삭제버튼</td>";
+			result += "</tr>";
 			for(Map m : userList){
-				result += m.toString();
+				//result += m.toString();
+				result += "<tr align='center'>";
+				result += "<td>" + m.get("user_num") + "</td>";
+				result += "<td>" + m.get("user_id") + "</td>";
+				result += "<td>" + m.get("user_pwd") + "</td>";
+				result += "<td>" + m.get("user_name") + "</td>";
+				result += "<td>" + m.get("class_num") + "</td>";
+				result += "<td><input type='button' value='삭제' onclick='deleteUser(" + m.get("user_num") + ")'/></td>";
+				result += "</tr>";
+				
 			}
+			result += "</table>";
 			doProcess(resq, result);
 		}
 		

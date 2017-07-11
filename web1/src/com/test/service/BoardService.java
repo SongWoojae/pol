@@ -110,9 +110,9 @@ public class BoardService {
 
 	public List<Map> selectBoard(HashMap<String, String> hm) {
 		try {
-			String sql = "select title,content,user_num for board";
+			String sql = "select board_num, title,content,user_num for board";
 			if (hm.get("title") != null) {
-				sql += "where board like ?";
+				sql += "where title like ?";
 			}
 			con = DBConn2.getCon();
 			ps = con.prepareStatement(sql);
@@ -124,6 +124,9 @@ public class BoardService {
 			while (rs.next()) {
 				HashMap hm1 = new HashMap();
 				hm1.put("board_num", rs.getString("board_num"));
+				hm1.put("title", rs.getString("title"));
+				hm1.put("content", rs.getString("content"));
+				hm1.put("user_num", rs.getString("user_num"));
 				boardList.add(hm1);
 			}
 			return boardList;
