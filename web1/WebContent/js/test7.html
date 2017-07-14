@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script>
+function makeInput(){
+	var mcObj = document.getElementById("makeCnt");
+	var gObj = document.getElementById("gDiv");
+	resultStr = "";
+	for(var i=0;i<mcObj.value;i++){
+		resultStr += "<input type = 'text' name='txt'/>";
+	}
+	gObj.innerHTML = resultStr;
+	alert("생성할거다");
+}
+
+function searchInput(){
+	var str = document.getElementById("searchValue").value;
+	var elObjs = document.getElementsByName("txt");
+	for(var i=0;i<elObjs.length;i++){
+		var targetValue = elObjs[i].value;
+		if(targetValue.indexOf(str)!=-1){
+			alert("찾았다!!");
+			elObjs[i].focus();
+			return;
+		}
+	}
+	
+	
+}
+</script>
+<body>
+	생성 갯수 : <input type="text" id="makeCnt" name="makeCnt" />
+	<input type="button" value="생성" onclick="makeInput()" /><br />
+	<div id="gDiv"></div>
+	<input type="text" id="searchValue" name=searchValue />
+	<input type="submit" value="값 찾기" onclick="searchInput()"/>
+</body>
+</html>
