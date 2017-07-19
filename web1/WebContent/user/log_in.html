@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script>
+function doLogin(){
+	
+		var idObj = document.getElementById("userid");
+		var passObj = document.getElementById("userpwd"); 
+		
+		if(idObj.value==""){
+			alert("아이디를 확인하고 다시 시도해주세요");
+			idObj.focus();
+			return false;	
+		}
+		if(passObj.value==""){
+			passObj.focus();
+			alert("비밀번호를 확인하고 다시 시도해주세요")
+			return false;
+		}
+		return true;
+	}
+}
+</script>
+<body>
+<div width="100%">
+<table border="1" cellspacing="0" cellpadding="0" width="400" align="center">
+<tr>
+	<td align="center"> ID </td>
+	<td align="center"><input type="text" name="userid" id="userid"/></td>
+</tr>
+<tr>
+	<td align="center"> PASSWORD </td>
+	<td align="center"><input type="password" name="userpwd" id="userpwd"/></td>
+</tr>
+<tr align="center">
+	<td colspan="2"><input type="button" value="로그인" onclick="doLogin()"/></td>
+	</tr>
+
+</table>
+</div>
+<input type="hidden" name="command" id="command" value="SIGNIN" />
+</body>
+</html>
