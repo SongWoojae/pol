@@ -39,15 +39,23 @@ public class UserServlet extends HttpServlet {
 			return;
 		}
 		UserService us = new UserService();
+		if (command.equals("LOGIN")){
+			String userId = req.getParameter("userid");
+			String userPwd = req.getParameter("userpwd");
+
+			HashMap hm = new HashMap();
+			// html화면에서 던진 id값을 "id"라는 키로 해쉬맵에 저장
+			hm.put("userid", userId);
+			// html화면에서 던진 pwd값을 "pwd"라는 키로 해쉬맵에 저장
+			hm.put("userpwd", userPwd);
+			String result = us.loginUser(hm);
+			doProcess(resq, result);
+		}
 
 		// UserService에 있는 insertUser(HashMap hm)이라는 함수를 호출하기 위해
 		// UserService로 us 레퍼런스 변수를 생성
-		if(command.equals("SIGNIN")){
-			if(command ==null){
-				return;
-			}
-		}
-		if (command.equals("SIGNIN")) {
+		
+		else if (command.equals("SIGNIN")) {
 			String userid = req.getParameter("userid");
 			String userpwd = req.getParameter("userpwd");
 			String username = req.getParameter("username");
@@ -84,10 +92,10 @@ public class UserServlet extends HttpServlet {
 				doProcess(resq, "값 똑바로 입력 안하냐잉~");
 			}
 		} else if (command.equals("DELETE")) {
-			String user_num = req.getParameter("user_num");
+			String user_num = req.getParameter("usernum");
 			System.out.println("삭제할 번호 : " + user_num);
 			HashMap hm = new HashMap();
-			hm.put("user_num", user_num);
+			hm.put("usernum", user_num);
 			boolean isDelete = us.deleteUser(hm);
 			String result = "";
 
@@ -127,45 +135,20 @@ public class UserServlet extends HttpServlet {
 			}
 
 		} else if (command.equals("SELECT")) {
-			String name = req.getParameter("name");
+			String name = req.getParameter("username");
 			System.out.println("이름 : " + name);
 			HashMap hm = new HashMap();
 			if (name != null && !name.equals("")) {
 				hm.put("name", "%" + name + "%");
 			}
 			List<Map> userList = us.selectUser(hm);
-			String result = "<script>";
-
-			result += "function deleteUser(userNum){";
-			result += "location.href='delete_user.user?command=DELETE&user_num=' + userNum;";
-			result += "}";
-			result += "</script>";
-			result += "<form action='/test_web/sign.user'>";
-			result += "이름 : <input type='text' name='name' id='name'/><input type='submit' value='검색'/>";
-			result += "<input type='hidden' name='command' value='SELECT'/>";
-			result += "</form>";
-			result += "<table border='1'>";
-			result += "<tr>";
-			result += "<td>유저번호</td>";
-			result += "<td>유저아이디</td>";
-			result += "<td>유저비밀번호</td>";
-			result += "<td>유저이름</td>";
-			result += "<td>클래스번호</td>";
-			result += "<td>삭제버튼</td>";
-			result += "</tr>";
+			String result = "번호{/}이름{/}아이디{/}나이{+}";
+			result += "dis{/}en{/}en{/}en{+}";
+			
 			for (Map m : userList) {
-				// result += m.toString();
-				result += "<tr align='center'>";
-				result += "<td>" + m.get("user_num") + "</td>";
-				result += "<td>" + m.get("user_id") + "</td>";
-				result += "<td>" + m.get("user_pwd") + "</td>";
-				result += "<td>" + m.get("user_name") + "</td>";
-				result += "<td>" + m.get("class_num") + "</td>";
-				result += "<td><input type='button' value='삭제' onclick='deleteUser(" + m.get("user_num") + ")'/></td>";
-				result += "</tr>";
-
+				result += m.get("usernum") + "{/}" + m.get("username") + "{/}" + m.get("userid") + "{/}" + m.get("age") +  "{+}";						
 			}
-			result += "</table>";
+			result = result.substring(0, result.length()-3);
 			doProcess(resq, result);
 		}
 
