@@ -10,21 +10,23 @@ import java.util.List;
 import java.util.Map;
 
 import com.test.common.DBConn2;
+import com.test.dto.BoardInfo;
 
 public class BoardService {
 	Connection con = null;
 	PreparedStatement ps = null;
 
-	public boolean insertBoard(HashMap<String, String> hm) {
+	public boolean insertBoard(BoardInfo bi) {
 		try {
 			con = DBConn2.getCon();
-			String sql = "insert into board(title,content,user_num)";
-			sql += "values(?,?,?)";
+			String sql = "insert into board(bititle, bicontent, bipwd, creusr)";
+			sql += "values(?,?,?,?)";
 
 			ps = con.prepareStatement(sql);
-			ps.setString(1, hm.get("title"));
-			ps.setString(2, hm.get("content"));
-			ps.setString(3, hm.get("user_num"));
+			ps.setString(1, bi.getBiTitle());
+			ps.setString(2, bi.getBiContent());
+			ps.setString(3, bi.getbipwd());
+			ps.setString(4, bi.getcreusr());
 
 			int result = ps.executeUpdate();
 			if (result == 1) {

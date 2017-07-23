@@ -3,6 +3,7 @@ package com.test.servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -25,6 +26,28 @@ public class BoardServlet extends HttpServlet {
 //		String pwd1 = req.getParameter("pass");
 //		String a = req.getParameter("a");
 //		System.out.println(name1 + pwd1 + a);
+		
+		Map<String, String[]> reqMap = req.getParameterMap();
+		System.out.println(reqMap);
+		Iterator<String> it = reqMap.keySet().iterator();
+		while (it.hasNext()) {
+			String key = it.next();
+			// System.out.println(key + "," + reqMap.get(key)[0]);
+		}
+		
+		String binum = req.getParameter("binum");
+		String bititle = req.getParameter("bititle");
+		String bicontent = req.getParameter("bicontent");
+		String bipwd = req.getParameter("bipwd");
+		String creusr = req.getParameter("creusr");
+		if(binum!=null){
+			bi.setBiNum(Integer.parseInt(binum));
+		}
+		bi.setBiTitle(bititle);
+		bi.setBicontent(bicontent);
+		bi.setBibipwd(bipwd);
+		bi.setcreusr(creusr);
+		
 
 		String command = req.getParameter("command");
 
@@ -40,11 +63,7 @@ public class BoardServlet extends HttpServlet {
 
 			System.out.println(title + "," + content + "," + user_num);
 
-			HashMap hm = new HashMap();
-			hm.put("title", title);
-			hm.put("content", content);
-			hm.put("user_num", user_num);
-
+			
 			if (bs.insertBoard(hm)) {
 				doProcess(resq, "저장 완료되었습니다.");
 			} else {
