@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.test.dto.BoardInfo;
 import com.test.service.BoardService;
-import com.test.service.UserService;
 
 public class BoardServlet extends HttpServlet {
 
@@ -40,12 +40,13 @@ public class BoardServlet extends HttpServlet {
 		String bicontent = req.getParameter("bicontent");
 		String bipwd = req.getParameter("bipwd");
 		String creusr = req.getParameter("creusr");
+		BoardInfo bi = new BoardInfo();
 		if(binum!=null){
 			bi.setBiNum(Integer.parseInt(binum));
 		}
 		bi.setBiTitle(bititle);
-		bi.setBicontent(bicontent);
-		bi.setBibipwd(bipwd);
+		bi.setBiContent(bicontent);
+		bi.setbipwd(bipwd);
 		bi.setcreusr(creusr);
 		
 
@@ -57,25 +58,15 @@ public class BoardServlet extends HttpServlet {
 		BoardService bs = new BoardService();
 
 		if (command.equals("SIGNIN")) {
-			String title = req.getParameter("title");
-			String content = req.getParameter("content");
-			String user_num = req.getParameter("user_num");
-
-			System.out.println(title + "," + content + "," + user_num);
-
 			
-			if (bs.insertBoard(hm)) {
+			if (bs.insertBoard(bi)) {
 				doProcess(resq, "저장 완료되었습니다.");
 			} else {
 				doProcess(resq, "다시 입력하세요");
 			}
 
 		} else if (command.equals("DELETE")) {
-			String board_num = req.getParameter("board_num");
-			System.out.println("삭제할 번호 : " + board_num);
-
-			if (bs.deleteBoard(Integer.parseInt(board_num))) {
-
+			boolean isDelete = bs.deleteBoard(bi);
 				doProcess(resq, "삭제 완료되었습니다!!");
 			} else {
 				doProcess(resq, "다시 입력하세요");

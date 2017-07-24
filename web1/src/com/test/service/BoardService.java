@@ -49,12 +49,12 @@ public class BoardService {
 		return true;
 	}
 
-	public boolean deleteBoard(int num) {
+	public boolean deleteBoard(BoardInfo bi) {
 		try {
 			con = DBConn2.getCon();
-			String sql = "delete from board where board_num= ? ";
+			String sql = "delete from board where binum= ? ";
 			ps = con.prepareStatement(sql);
-			ps.setInt(1, num);
+			ps.setInt(1, bi.getBiNum());
 
 			int result = ps.executeUpdate();
 			if (result == 1) {
@@ -77,18 +77,19 @@ public class BoardService {
 
 	}
 
-	public boolean updateBoard(HashMap<String, String> hm) {
+	public boolean updateBoard(BoardInfo bi) {
 		try {
 
 			con = DBConn2.getCon();
 
-			String sql = "update board set title=?, content=?, user_num=? where board_num=?";
+			String sql = "update board set bititle=?, bicontent=?, bipwd=? creusr=? where binum=?";
 			ps = con.prepareStatement(sql);
 
-			ps.setString(1, hm.get("title"));
-			ps.setString(2, hm.get("content"));
-			ps.setString(3, hm.get("user_num"));
-			ps.setString(4, hm.get("board_num"));
+			ps.setString(1, bi.getBiTitle());
+			ps.setString(2, bi.getBiContent());
+			ps.setString(3, bi.getbipwd());
+			ps.setString(4, bi.getcreusr());
+			ps.setInt(5, bi.getBiNum());
 
 			int result = ps.executeUpdate();
 			if (result == 1) {
@@ -110,7 +111,7 @@ public class BoardService {
 		return true;
 	}
 
-	public List<Map> selectBoard(HashMap<String, String> hm) {
+	public List<BoardInfo> selectBoard(BoardInfo bi) {
 		try {
 			String sql = "select board_num, title,content,user_num for board";
 			if (hm.get("title") != null) {
