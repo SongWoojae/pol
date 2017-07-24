@@ -21,7 +21,7 @@ public class BoardServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resq) throws IOException, ServletException {
 		req.setCharacterEncoding("UTF-8");
-
+		
 //		String name1 = req.getParameter("name");
 //		String pwd1 = req.getParameter("pass");
 //		String a = req.getParameter("a");
