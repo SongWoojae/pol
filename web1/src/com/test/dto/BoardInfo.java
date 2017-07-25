@@ -1,42 +1,42 @@
 package com.test.dto;
 
 public class BoardInfo {
-	private int binum;
-	private String bititle;
-	private String bicontent;
-	private String bipwd;
+	private int biNum;
+	private String biTitle;
+	private String biContent;
+	private String biPwd;
 	private String creusr;
 	
 	
 	public int getBiNum(){
-		return binum;
+		return biNum;
 	}
 	
-	public void setBiNum(int binum){
-		this.binum = binum;
+	public void setBiNum(int biNum){
+		this.biNum = biNum;
 	}
 	public String getBiTitle(){
-		return bititle;
+		return biTitle;
 	}
-	public void setBiTitle(String bititle){
-		this.bititle = bititle;
+	public void setBiTitle(String biTitle){
+		this.biTitle = biTitle;
 	}
 	public String getBiContent(){
-		return bicontent;
+		return biContent;
 	}
-	public void setBiContent(String bicontent){
-		this.bicontent = bicontent;
+	public void setBiContent(String biContent){
+		this.biContent = biContent;
 	}
-	public String getbipwd(){
-		return bipwd;
+	public String getbiPwd(){
+		return biPwd;
 	}
-	public void setbipwd(String bipwd){
-		this.bipwd = bipwd;
+	public void setbipwd(String biPwd){
+		this.biPwd = biPwd;
 	}
-	public String getcreusr(){
+	public String getCreusr(){
 		return creusr;
 	}
-	public void setcreusr(String creusr){
+	public void setCreusr(String creusr){
 		this.creusr = creusr;
 	}	
 	

@@ -25,8 +25,8 @@ public class BoardService {
 			ps = con.prepareStatement(sql);
 			ps.setString(1, bi.getBiTitle());
 			ps.setString(2, bi.getBiContent());
-			ps.setString(3, bi.getbipwd());
-			ps.setString(4, bi.getcreusr());
+			ps.setString(3, bi.getbiPwd());
+			ps.setString(4, bi.getCreusr());
 
 			int result = ps.executeUpdate();
 			if (result == 1) {
@@ -87,8 +87,8 @@ public class BoardService {
 
 			ps.setString(1, bi.getBiTitle());
 			ps.setString(2, bi.getBiContent());
-			ps.setString(3, bi.getbipwd());
-			ps.setString(4, bi.getcreusr());
+			ps.setString(3, bi.getbiPwd());
+			ps.setString(4, bi.getCreusr());
 			ps.setInt(5, bi.getBiNum());
 
 			int result = ps.executeUpdate();
@@ -113,24 +113,25 @@ public class BoardService {
 
 	public List<BoardInfo> selectBoard(BoardInfo bi) {
 		try {
-			String sql = "select board_num, title,content,user_num for board";
-			if (hm.get("title") != null) {
-				sql += "where title like ?";
+			String sql = "select binum, bititle,bicontent,bipwd,bicreusr for board";
+			if (bi.getBiTitle() != null && bi.getBiTitle().equals("")) {
+				sql += "where bititle like ?";
 			}
 			con = DBConn2.getCon();
 			ps = con.prepareStatement(sql);
-			if (hm.get("title") != null) {
-				ps.setString(1, hm.get("title"));
+			if (bi.getBiTitle() != null && !bi.getBiTitle().equals("")) {
+				ps.setString(1, bi.getBiTitle());
 			}
 			ResultSet rs = ps.executeQuery();
 			List boardList = new ArrayList();
 			while (rs.next()) {
-				HashMap hm1 = new HashMap();
-				hm1.put("board_num", rs.getString("board_num"));
-				hm1.put("title", rs.getString("title"));
-				hm1.put("content", rs.getString("content"));
-				hm1.put("user_num", rs.getString("user_num"));
-				boardList.add(hm1);
+				BoardInfo bi2 = new BoardInfo();
+				bi2.setBiNum(rs.getInt("binum"));
+				bi2.setBiTitle(rs.getString("bititle"));
+				bi2.setBiContent(rs.getString("bicontent"));
+				bi2.setbipwd(rs.getString("bipwd"));
+				bi2.setCreusr(rs.getString("creusr"));
+				boardList.add(bi2);
 			}
 			return boardList;
 		} catch (ClassNotFoundException e) {
