@@ -37,7 +37,7 @@ if(id!=null && pwd!=null){
 			String hp2 = rs.getString("hp2");
 			String hp3 = rs.getString("hp3");
 			if(userPwd.equals(ui.getUserPwd())){
-				result =  "로그인 성공";
+				result =  rs.getString("username") + "님 로그인 하셨습니다.";
 				session.setAttribute("userid",ui.getUserId());
 				session.setAttribute("username",userName);
 				session.setAttribute("age",age);
@@ -46,14 +46,14 @@ if(id!=null && pwd!=null){
 				session.setAttribute("hp2",hp2);
 				session.setAttribute("hp3",hp3);
 			}else{
-				result =  "비밀번호 틀렸어 임마!";
+				result =  "비밀번호를 확인해주세요";
 			}
 		}
 	}catch(Exception e){
 		System.out.println(e);
 	}
 	if(result.equals("")){
-		result =  "그런 아이디 없다잖아!!";
+		result =  "아이디를 확인해주세요";
 	}
 	out.println(result);
 }else{

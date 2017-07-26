@@ -19,14 +19,16 @@ public class BoardService {
 	public boolean insertBoard(BoardInfo bi) {
 		try {
 			con = DBConn2.getCon();
-			String sql = "insert into board(bititle, bicontent, bipwd, creusr)";
-			sql += "values(?,?,?,?)";
+			String sql = "insert into board(bititle, bicontent, bipwd, creusr, credat)";
+			sql += "values(?,?,?,?,?)";
 
 			ps = con.prepareStatement(sql);
-			ps.setString(1, bi.getBiTitle());
-			ps.setString(2, bi.getBiContent());
-			ps.setString(3, bi.getbiPwd());
+			ps.setString(1, bi.getBititle());
+			ps.setString(2, bi.getBicontent());
+			ps.setString(3, bi.getBipwd());
 			ps.setString(4, bi.getCreusr());
+			ps.setString(5, bi.getCredat());
+			
 
 			int result = ps.executeUpdate();
 			if (result == 1) {
@@ -54,7 +56,7 @@ public class BoardService {
 			con = DBConn2.getCon();
 			String sql = "delete from board where binum= ? ";
 			ps = con.prepareStatement(sql);
-			ps.setInt(1, bi.getBiNum());
+			ps.setInt(1, bi.getBinum());
 
 			int result = ps.executeUpdate();
 			if (result == 1) {
@@ -85,11 +87,11 @@ public class BoardService {
 			String sql = "update board set bititle=?, bicontent=?, bipwd=? creusr=? where binum=?";
 			ps = con.prepareStatement(sql);
 
-			ps.setString(1, bi.getBiTitle());
-			ps.setString(2, bi.getBiContent());
-			ps.setString(3, bi.getbiPwd());
+			ps.setString(1, bi.getBititle());
+			ps.setString(2, bi.getBicontent());
+			ps.setString(3, bi.getBipwd());
 			ps.setString(4, bi.getCreusr());
-			ps.setInt(5, bi.getBiNum());
+			ps.setInt(5, bi.getBinum());
 
 			int result = ps.executeUpdate();
 			if (result == 1) {
@@ -114,22 +116,22 @@ public class BoardService {
 	public List<BoardInfo> selectBoard(BoardInfo bi) {
 		try {
 			String sql = "select binum, bititle,bicontent,bipwd,bicreusr for board";
-			if (bi.getBiTitle() != null && bi.getBiTitle().equals("")) {
+			if (bi.getBititle() != null && bi.getBititle().equals("")) {
 				sql += "where bititle like ?";
 			}
 			con = DBConn2.getCon();
 			ps = con.prepareStatement(sql);
-			if (bi.getBiTitle() != null && !bi.getBiTitle().equals("")) {
-				ps.setString(1, bi.getBiTitle());
+			if (bi.getBititle() != null && !bi.getBititle().equals("")) {
+				ps.setString(1, bi.getBititle());
 			}
 			ResultSet rs = ps.executeQuery();
 			List boardList = new ArrayList();
 			while (rs.next()) {
 				BoardInfo bi2 = new BoardInfo();
-				bi2.setBiNum(rs.getInt("binum"));
-				bi2.setBiTitle(rs.getString("bititle"));
-				bi2.setBiContent(rs.getString("bicontent"));
-				bi2.setbipwd(rs.getString("bipwd"));
+				bi2.setBinum(rs.getInt("binum"));
+				bi2.setBititle(rs.getString("bititle"));
+				bi2.setBicontent(rs.getString("bicontent"));
+				bi2.setBipwd(rs.getString("bipwd"));
 				bi2.setCreusr(rs.getString("creusr"));
 				boardList.add(bi2);
 			}

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
- <%@ page import="java.util.Date" %>
- <%@ page import="java.text.SimpleDateFormat" %>
+	pageEncoding="UTF-8"%>
+<%@ page import="java.util.Date"%>
+<%@ page import="java.text.SimpleDateFormat"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -23,7 +23,6 @@ String hp2 = "";
 String hp3 = "";
 boolean login = false;
 if(userId!=null){
-	
 	userName = (String) session.getAttribute("username");
 	age = (int) session.getAttribute("age");
 	address = (String) session.getAttribute("address");
@@ -35,22 +34,7 @@ if(userId!=null){
 String rootPath = request.getContextPath();
 Date toDate = new Date();
 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-String toDateStr = sdf.format(toDate);
-
-int biNum = 0;
-String biTitle = "";
-String biContent = "";
-String biPwd = "";
-String creusr = "";
-
-if(biTitle!=null){
-	
-	biTitle = (String) session.getAttribute("biTitle");
-	biContent  = (String) session.getAttribute("biContent");
-	biPwd = (String) session.getAttribute("biPwd");
-	creusr = (String) session.getAttribute("biCreusr");
-	
-}
+String toDateStr = sdf.format(toDate); 
 %>
 
 
@@ -63,5 +47,5 @@ function doMovePage() {
 	if(pageId=="board"){
 		url = rootPath + "/board/board_insert.html";
 	}
-	}
+}
 </script>

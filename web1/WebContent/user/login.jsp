@@ -6,6 +6,7 @@
 <%@ page import="com.test.dto.UserInfo"%>
 
 <script>
+
 	var setObj;
 	var loopCnt = 0;
 	function doStartTimer() {
@@ -24,6 +25,9 @@
 	}
 	function doLogout() {
 		location.href = "/user/login_ok.jsp";
+	}
+	function doMovePage(){
+		location.href = "/board/board_select.jsp";
 	}
 	
 </script>
@@ -53,7 +57,7 @@
 	<form action="/user/login_ok.jsp">
 		ID : <input type="text" name="id" /><br /> 
 		PWD : <input type="password" name="pwd" /><br />
-		<input type="submit" value="로그인!!" />
+		<input type="submit" value="LOGIN" />
 	</form>
 	<%
 		}

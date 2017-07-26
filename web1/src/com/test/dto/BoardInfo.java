@@ -1,44 +1,47 @@
 package com.test.dto;
 
 public class BoardInfo {
-	private int biNum;
-	private String biTitle;
-	private String biContent;
-	private String biPwd;
-	private String creusr;
+	private int binum; 
+	private String bititle; 
+	private String bicontent; 
+	private String bipwd; 
+	private String creusr; 
+	private String credat;
 	
-	
-	public int getBiNum(){
-		return biNum;
+	public int getBinum() {
+		return binum;
 	}
-	
-	public void setBiNum(int biNum){
-		this.biNum = biNum;
+	public void setBinum(int binum) {
+		this.binum = binum;
 	}
-	public String getBiTitle(){
-		return biTitle;
+	public String getBititle() {
+		return bititle;
 	}
-	public void setBiTitle(String biTitle){
-		this.biTitle = biTitle;
+	public void setBititle(String bititle) {
+		this.bititle = bititle;
 	}
-	public String getBiContent(){
-		return biContent;
+	public String getBicontent() {
+		return bicontent;
 	}
-	public void setBiContent(String biContent){
-		this.biContent = biContent;
+	public void setBicontent(String bicontent) {
+		this.bicontent = bicontent;
 	}
-	public String getbiPwd(){
-		return biPwd;
+	public String getBipwd() {
+		return bipwd;
 	}
-	public void setbipwd(String biPwd){
-		this.biPwd = biPwd;
+	public void setBipwd(String bipwd) {
+		this.bipwd = bipwd;
 	}
-	public String getCreusr(){
+	public String getCreusr() {
 		return creusr;
 	}
-	public void setCreusr(String creusr){
+	public void setCreusr(String creusr) {
 		this.creusr = creusr;
-	}	
-	
-
+	}
+	public String getCredat() {
+		return credat;
+	}
+	public void setCredat(String credat) {
+		this.credat = credat;
+	}
 }

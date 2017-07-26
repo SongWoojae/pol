@@ -4,13 +4,16 @@
 <%@ page import="java.sql.*"%>
 <%@ page import="com.test.common.DBConn2"%>
 <%@ page import="com.test.dto.BoardInfo"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-</head>
 
+
+<script>
+function doWrite(){
+	location.href = "/board/board_insert.jsp";
+}
+function doMovePage(){
+	location.href = "/user/login.jsp";
+}
+</script>
 <body>
 	<%
 	Connection con = null;
@@ -18,11 +21,48 @@
 	
 	try{
 		con = DBConn2.getCon();
-		String sql = "select binum, bititle, bicontent, bipwd, creusr, credat form board_info";
+		String sql = "select binum, bititle, bicontent, bipwd, creusr, credat from board_info";
+		ps = con.prepareStatement(sql);
+		ResultSet rs = ps.executeQuery();
+		String tableStr="<table border='1'>";
+		tableStr += "<tr>";
+		tableStr += "<td>번호</td>";
+		tableStr += "<td>제목</td>";
+		tableStr += "<td>내용</td>";
+		tableStr += "<td>비밀번호</td>";
+		tableStr += "<td>작성자</td>";
+		tableStr += "<td>작성일자</td>";
+		tableStr += "</tr>";
+		
+		while(rs.next()){
+			tableStr += "<tr>";
+			tableStr += "<td>"+rs.getInt("binum") + "</td>";
+			tableStr += "<td>"+rs.getString("bititle") + "</td>";
+			tableStr += "<td>"+rs.getString("bicontent") + "</td>";
+			tableStr += "<td>"+rs.getString("bipwd") + "</td>";
+			tableStr += "<td>"+rs.getString("creusr") + "</td>";
+			tableStr += "<td>"+rs.getString("credat") + "</td>";
+			tableStr += "</tr>";
+		}
+		tableStr += "</table>";
+		out.println(tableStr);
+	}catch(Exception e){
+		System.out.println(e);
+	}finally{
+		if(ps!=null){
+		ps.close();
+		ps = null;
+		}
+		if(con!=null){
+			con.close();
+			con=null;
+		}
+		DBConn2.closeCon();
+		
 	}
-	
-		out.println("<input type='button' value='생성하기' onclick='doCreate()'/>");
-		out.println("<input type='button' value='메인가기' onclick='goToMain()'/>");
 	%>
+	
+	<input type="button" value="게시글 작성" onclick="doWrite()"/>
+	<input type="button" value="메인가기" onclick="doMovePage('main')"/>
 </body>
 </html>

@@ -43,12 +43,12 @@ public class BoardServlet extends HttpServlet {
 		String creusr = req.getParameter("creusr");
 		BoardInfo bi = new BoardInfo();
 		if(binum!=null){
-			bi.setBiNum(Integer.parseInt(binum));
+			bi.setBinum(Integer.parseInt(binum));
 		}
-		bi.setBiTitle(bititle);
-		bi.setBiContent(bicontent);
-		bi.setbipwd(bipwd);
-		bi.setcreusr(creusr);
+		bi.setBititle(bititle);
+		bi.setBicontent(bicontent);
+		bi.setBipwd(bipwd);
+		bi.setCreusr(creusr);
 		
 
 		String command = req.getParameter("command");
@@ -87,13 +87,13 @@ public class BoardServlet extends HttpServlet {
 		} else if (command.equals("SELECT")) {
 			System.out.println("이름 : " + bititle);
 			if (bititle != null && !bititle.equals("")) {
-				bi.setBiTitle("%" + bititle + "%");
+				bi.setBititle("%" + bititle + "%");
 			}
 			List<BoardInfo> boardList  = bs.selectBoard(bi);
 			String result="번호{/}제목{/}내용{/}글쓴이{+}";
 			result+="dis{/}en{/}en{/}en{+}";
 			for(BoardInfo bi2 : boardList){
-				result += bi2.getBiNum() + "{/}" + bi2.getBiTitle() + "{/}" + bi2.getBiContent() + "{/}" + bi2.getcreusr()+ "{+}"; 
+				result += bi2.getBinum() + "{/}" + bi2.getBititle() + "{/}" + bi2.getBicontent() + "{/}" + bi2.getCreusr()+ "{+}"; 
 			}
 			result = result.substring(0, result.length()-3);
 			doProcess(resq, result);
