@@ -5,16 +5,16 @@
 <body>
 <form method="get" action="<%=rootPath%>/board/board_insert_ok.jsp">
 
-	제목 :<input type="text" name="title" id="bititle" />
+	제목 :<input type="text" name="bititle" id="bititle" />
 	<br />
-	 내용 : <textarea name="content" id="bicontent"></textarea>
+	 내용 : <textarea name="bicontent" id="bicontent"></textarea>
 	<br /> 
-	글쓴이 :<input type="text" name="bicreusr" id="bicreusr" value="<%=userId%>" />
+	글쓴이 :<input type="text" name="creusr" id="creusr" value="<%=userId%>" />
 	<br /> 
 	비밀번호 :<input type="password" name="bipwd" id="bipwd" />
 	<br />	
 	<input type="submit" value="글쓰기"  />
-	<input type="button" value="뒤로가기" onclick="movePage()" />
+	
 </form>
 </body>
 </html>

@@ -35,6 +35,13 @@ String rootPath = request.getContextPath();
 Date toDate = new Date();
 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 String toDateStr = sdf.format(toDate); 
+
+String init = request.getParameter("init");
+String defaultUrl = "";
+if(init ==null && !login){
+	defaultUrl = rootPath + "/user/login.jsp?init=1";
+	response.sendRedirect(defaultUrl);
+}
 %>
 
 
@@ -42,10 +49,17 @@ String toDateStr = sdf.format(toDate);
 <script>
 var rootpath = "<%=rootPath%>";
 
-function doMovePage() {
-	var url ="";
+function doMovePage(pageId){
+	var url = "<%=rootPath%>";
 	if(pageId=="board"){
-		url = rootPath + "/board/board_insert.html";
+		url += "/board/board_select.jsp";
+	}else if(pageId=="main"){
+		url += "/";
 	}
+	else if(pageId=="insertBoard"){
+		url += "/board/board_insert.jsp";
+	}
+	location.href=url;
+	
 }
 </script>
