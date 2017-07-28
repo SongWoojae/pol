@@ -21,20 +21,21 @@
             <input type="checkbox" value="remember-me"> Remember me
           </label>
         </div>
-        <button id="btn2" class="btn btn-lg btn-primary btn-block" type="button">LOGIN</button>
+        <button id="btn2" class="btn btn-lg btn-primary btn-block" type="submit">LOGIN</button>
       </form>
 
     </div> <!-- /container -->
     <script>
    
     
-    
+    <!--
     $("button").click(function(){
     	alert(1);
     });
-    $("#btn1").click(function(){
+    $("#btn2").click(function(){
     	alert(2);
     });
+    -->
     </script>
 </body>
 </html>
