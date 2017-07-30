@@ -8,8 +8,8 @@
 <jsp:include page="/common/top.jsp" flush="false"></jsp:include>
     <div class="container">
       <div class="starter-template">
-        <h1>메인 화면</h1>
-        <p class="lead">메인 화면입니다.</p>
+        <h1>Board Main</h1>
+        <p class="lead">하고 싶은 말을 써보세요!</p>
       </div>
     </div><!-- /.container -->
 </body> 
