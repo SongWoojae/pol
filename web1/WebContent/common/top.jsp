@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%
+	pageEncoding="UTF-8"%>
+<%
     boolean login = Boolean.parseBoolean(request.getParameter("login"));
     String loginStr = "로그인";
     if(login){
@@ -9,7 +9,7 @@
     %>
 <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
-        <div class="navbar-header">
+        <div class="navbar-">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
@@ -28,5 +28,6 @@
           
         </div><!--/.nav-collapse -->
       </div>
-    </nav>
+      </nav>
 
+     

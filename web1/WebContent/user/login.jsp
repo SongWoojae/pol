@@ -21,21 +21,40 @@
             <input type="checkbox" value="remember-me"> Remember me
           </label>
         </div>
-        <button id="btn2" class="btn btn-lg btn-primary btn-block" type="submit">LOGIN</button>
+        <button id="btn2" class="btn btn-lg btn-primary btn-block" type="button">LOGIN</button>
       </form>
 
     </div> <!-- /container -->
     <script>
-   
+    $("button.btn").click(function(){
+		var id = $("#id").val();
+		var pwd = $("#pwd").val();
+		var param = {};
+		param["id"] = id;
+		param["pwd"] = pwd;
+		param = JSON.stringify(param);
+		$.ajax({ 
+	        type     : "POST"
+	    ,   url      : "/user/login_ok.jsp"
+	    ,   dataType : "json" 
+	    ,   beforeSend: function(xhr) {
+	        xhr.setRequestHeader("Accept", "application/json");
+	        xhr.setRequestHeader("Content-Type", "application/json");
+	    }
+	    ,   data     : param
+	    ,   success : function(result){
+	    	alert(result.msg);
+	    	alert(result.login);
+	    }
+	    ,   error : function(xhr, status, e) {
+		    	alert("에러 : "+e);
+		},
+		done : function(e) {
+		}
+		});
+	});
     
-    <!--
-    $("button").click(function(){
-    	alert(1);
-    });
-    $("#btn2").click(function(){
-    	alert(2);
-    });
-    -->
+  
     </script>
 </body>
 </html>
