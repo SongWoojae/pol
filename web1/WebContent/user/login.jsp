@@ -6,54 +6,55 @@
 <%@ page import="com.test.dto.UserInfo" %>
 <link rel="stylesheet" href="<%=rootPath%>/ui/signin.css"/>
 <body>
-<jsp:include page="/common/top.jsp" flush="false">
-	<jsp:param name="login" value="<%=login%>"></jsp:param>
-</jsp:include>
-    <div class="container">
+<div class="container">
       <form class="form-signin"  action="<%=rootPath%>/user/login_ok.jsp">
-        <h2 class="form-signin-heading"> 로그인이 필요합니다.</h2>
+        <h2 class="form-signin-heading" FONT STYLE="color:white"> 로그인이 필요합니다.</h2>
         <label for="inputtext" class="sr-only">ID</label>
         <input type="text" id="id" name="id" class="form-control" placeholder="ID" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password"  name="pwd" id="pwd" class="form-control" placeholder="Password" required>
         <div class="checkbox">
-          <label>
-            <input type="checkbox" value="remember-me"> Remember me
+          <label FONT STYLE="color:white">
+            <input type="checkbox" value="remember-me" > Remember me
           </label>
         </div>
         <button id="btn2" class="btn btn-lg btn-primary btn-block" type="button">LOGIN</button>
       </form>
-
     </div> <!-- /container -->
     <script>
     $("button.btn").click(function(){
 		var id = $("#id").val();
 		var pwd = $("#pwd").val();
 		var param = {};
-		param["id"] = id;
-		param["pwd"] = pwd;
+		param["userId"] = id;
+		param["userPwd"] = pwd;
 		param = JSON.stringify(param);
-		$.ajax({ 
-	        type     : "POST"
-	    ,   url      : "/user/login_ok.jsp"
-	    ,   dataType : "json" 
-	    ,   beforeSend: function(xhr) {
-	        xhr.setRequestHeader("Accept", "application/json");
-	        xhr.setRequestHeader("Content-Type", "application/json");
-	    }
-	    ,   data     : param
-	    ,   success : function(result){
-	    	alert(result.msg);
-	    	alert(result.login);
-	    }
-	    ,   error : function(xhr, status, e) {
-		    	alert("에러 : "+e);
-		},
-		done : function(e) {
-		}
-		});
+		var a = { 
+		        type     : "POST"
+		    	    ,   url      : "/user/login_ok.jsp"
+		    	    ,   dataType : "json" 
+		    	    ,   beforeSend: function(xhr) {
+		    	        xhr.setRequestHeader("Accept", "application/json");
+		    	        xhr.setRequestHeader("Content-Type", "application/json");
+		    	    }
+		    	    ,   data     : param
+		    	    ,   success : function(result){
+		    	    	alert(result.msg);
+		    	    	if(result.login=="ok"){
+		    	    		location.href = "<%=rootPath%>/main.jsp";
+		    	    	}else{
+		    	    		$("#id").val("");
+		    	    		$("#pwd").val("");
+		    	    	}
+		    	    }
+		    	    ,   error : function(xhr, status, e) {
+		    		    	alert("에러 : "+e);
+		    		},
+		    		done : function(e) {
+		    		}
+		    		};
+		$.ajax(a);
 	});
-    
   
     </script>
 </body>

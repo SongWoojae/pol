@@ -4,8 +4,9 @@
 <%@ page import="java.sql.*" %>
 <%@ page import="com.test.common.DBConn2" %>
 <%@ page import="com.test.dto.BoardInfo" %>
+ 
 <body>
-<jsp:include page="/common/top.jsp" flush="fasle"></jsp:include>
+
 <script>
 function goBoard(biNum,param2){
 	location.href ="<%=rootPath%>/board/board_view.jsp?binum=" + biNum;
@@ -21,7 +22,8 @@ function doSearch(){
  <%
 	String searchTarget = request.getParameter("searchTarget");
 	String searchStr = request.getParameter("searchStr");
-	Connection con = null;
+	Connection con = null
+			;
 	PreparedStatement ps = null;
 	try{
 		con = DBConn2.getCon();
@@ -101,3 +103,4 @@ function doSearch(){
 </div>
 </body>
 </html>
+<%@ include file="/common/bottom.jsp"%>

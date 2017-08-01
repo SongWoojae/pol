@@ -3,7 +3,7 @@
 	pageEncoding="UTF-8"%>
 
 <body>
-<jsp:include page="/common/top.jsp" flush="false"></jsp:include>
+
 	<div class ="container">
 		<div class="starter-template">
 <form method="get" action="<%=rootPath%>/board/board_insert_ok.jsp">

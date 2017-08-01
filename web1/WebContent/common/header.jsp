@@ -1,7 +1,7 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -42,15 +42,26 @@ if(init==null && !login){
 	defaultUrl = rootPath + "/user/login.jsp?init=2";
 	response.sendRedirect(defaultUrl);
 }
+String nowUrl = request.getRequestURI();
+String loginStr = "로그인";
+if(login){
+	loginStr = "로그아웃";
+}
 %>
+
 <script src="<%=rootPath%>/js/jquery-3.2.1.js"></script>
 <script src="<%=rootPath%>/ui/btsp3.7.7/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="<%=rootPath%>/ui/btsp3.7.7/css/bootstrap-theme.min.css"/>
-<link rel="stylesheet" href="<%=rootPath%>/ui/btsp3.7.7/css/bootstrap.min.css"/>
-<link rel="stylesheet" href="<%=rootPath%>/ui/common.css"/>
+<link rel="stylesheet"
+	href="<%=rootPath%>/ui/btsp3.7.7/css/bootstrap-theme.min.css" />
+<link rel="stylesheet"
+	href="<%=rootPath%>/ui/btsp3.7.7/css/bootstrap.min.css" />
+<link rel="stylesheet" href="<%=rootPath%>/ui/common.css" />
 <script>
 var rootPath = "<%=rootPath%>";
-
+$(document).ready(function(){
+	var nowUrl = "<%=nowUrl%>";
+	var obj = $("a[href='" + nowUrl + "']").parent().attr("class","active");
+})
 function doMovePage(pageId){
 	var url = "<%=rootPath%>";
 	if(pageId=="board"){
@@ -63,3 +74,19 @@ function doMovePage(pageId){
 	location.href=url;
 }
 </script>
+
+<div class="container">
+	<div class="page-header">		
+			
+			<ul class="nav nav-tabs" >
+				<li><a href="/main.jsp"><h1>Home</h1></a></li>
+				<li><a href="/board/board_select.jsp"><h1>Board</h1></a></li>
+				<li><a href="/user/user_info.jsp"><h1>UserInfo</h1></a></li>
+				<li><a href="/role/role_select.jsp"><h1>권한정보</h1></a></li>
+				<li><a href="/user/logout_ok.jsp"><h1><%=loginStr %></h1></a></li>
+			</ul>
+		</div>
+	</div>
+
+	
+	<!--/.nav-collapse -->

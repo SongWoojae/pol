@@ -1,16 +1,11 @@
 <%@ include file="/common/header.jsp"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<head>
-<title>IOT MAIN</title>
-</head>
-<body>
-<jsp:include page="/common/top.jsp" flush="false"></jsp:include>
+
     <div class="container">
       <div class="starter-template">
-        <h1>Board Main</h1>
-        <p class="lead">하고 싶은 말을 써보세요!</p>
+        <h1 FONT STYLE="color:white">Board Main</h1>
+        <p class="lead" FONT STYLE="color:white"><%=rootPath%>하고 싶은 말을 써보세요!</p>
       </div>
     </div><!-- /.container -->
-</body> 
-</html>
+    <%@ include file="/common/bottom.jsp"%>

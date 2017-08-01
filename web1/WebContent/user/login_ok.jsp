@@ -6,16 +6,18 @@
 <%@ page import="org.json.simple.JSONObject"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.google.gson.*"%>
+<%@ page import="java.io.*" %>
 
 <%
-	JSONObject j = new Gson().fromJson(request.getReader(), JSONObject.class);
-	String id = (String) j.get("id");
-	String pwd = (String) j.get("pwd");
-	String result = "";
-	if (id != null && pwd != null) {
-		UserInfo ui = new UserInfo();
-		ui.setUserId(id);
-		ui.setUserPwd(pwd);
+String id = null;
+String pwd = null;
+UserInfo ui = null;
+Gson g = new Gson();
+ui = g.fromJson(request.getReader(), UserInfo.class);
+
+String result = "";
+String login = "false";
+if(ui!=null){
 
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -35,7 +37,7 @@
 				String hp3 = rs.getString("hp3");
 				if (userPwd.equals(ui.getUserPwd())) {
 					result = userName + "님 환영합니다!";
-					
+					login = "ok";
 					session.setAttribute("userid", ui.getUserId());
 					session.setAttribute("username", userName);
 					session.setAttribute("age", age);
@@ -66,8 +68,10 @@
 		session.invalidate();
 	}
 	HashMap hm = new HashMap();
-	hm.put("login", "ok");
+	hm.put("login", login);
 	hm.put("msg", result);
-	String json = new Gson().toJson(hm);
+	
+	String json = g.toJson(hm);
+	System.out.println(json);
 	out.write(json);
 %>

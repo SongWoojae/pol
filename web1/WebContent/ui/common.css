@@ -1,8 +1,14 @@
 @CHARSET "UTF-8";
 body {
-  padding-top: 50px;
+  
+  padding-top: 0px;
+  background-color: #FBF5EF;
+  background-image:url("ironman2.gif");
+  background-size:100%
 }
+ 
 .starter-template {
   padding: 40px 15px;
   text-align: center;
+  
 }
