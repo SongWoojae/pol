@@ -76,8 +76,7 @@ function doMovePage(pageId){
 </script>
 
 <div class="container">
-	<div class="page-header">		
-			
+	<div class="page-header">				
 			<ul class="nav nav-tabs" >
 				<li><a href="/main.jsp"><h1>Home</h1></a></li>
 				<li><a href="/board/board_select.jsp"><h1>Board</h1></a></li>
