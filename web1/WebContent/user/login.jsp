@@ -8,13 +8,13 @@
 <body>
 <div class="container">
       <form class="form-signin"  action="<%=rootPath%>/user/login_ok.jsp">
-        <h2 class="form-signin-heading" FONT STYLE="color:white"> 로그인이 필요합니다.</h2>
+        <h2 class="form-signin-heading" > 로그인이 필요합니다.</h2>
         <label for="inputtext" class="sr-only">ID</label>
         <input type="text" id="id" name="id" class="form-control" placeholder="ID" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password"  name="pwd" id="pwd" class="form-control" placeholder="Password" required>
         <div class="checkbox">
-          <label FONT STYLE="color:white">
+          <label >
             <input type="checkbox" value="remember-me" > Remember me
           </label>
         </div>

@@ -47,15 +47,13 @@ String loginStr = "로그인";
 if(login){
 	loginStr = "로그아웃";
 }
+String version = "1.2";
 %>
-
-<script src="<%=rootPath%>/js/jquery-3.2.1.js"></script>
-<script src="<%=rootPath%>/ui/btsp3.7.7/js/bootstrap.min.js"></script>
-<link rel="stylesheet"
-	href="<%=rootPath%>/ui/btsp3.7.7/css/bootstrap-theme.min.css" />
-<link rel="stylesheet"
-	href="<%=rootPath%>/ui/btsp3.7.7/css/bootstrap.min.css" />
-<link rel="stylesheet" href="<%=rootPath%>/ui/common.css" />
+<script src="<%=rootPath%>/js/jquery-3.2.1.js?version=<%=version%>"></script>
+<script src="<%=rootPath%>/ui/btsp3.7.7/js/bootstrap.min.js?version=<%=version%>"></script>
+<link rel="stylesheet" href="<%=rootPath%>/ui/btsp3.7.7/css/bootstrap-theme.min.css?version=<%=version%>"/>
+<link rel="stylesheet" href="<%=rootPath%>/ui/btsp3.7.7/css/bootstrap.min.css?version=<%=version%>"/>
+<link rel="stylesheet" href="<%=rootPath%>/ui/common.css?version=<%=version%>"/>
 <script>
 var rootPath = "<%=rootPath%>";
 $(document).ready(function(){
@@ -78,11 +76,12 @@ function doMovePage(pageId){
 <div class="container">
 	<div class="page-header">				
 			<ul class="nav nav-tabs" >
-				<li><a href="/main.jsp"><h1>Home</h1></a></li>
-				<li><a href="/board/board_select.jsp"><h1>Board</h1></a></li>
-				<li><a href="/user/user_info.jsp"><h1>UserInfo</h1></a></li>
-				<li><a href="/role/role_select.jsp"><h1>권한정보</h1></a></li>
-				<li><a href="/user/logout_ok.jsp"><h1><%=loginStr %></h1></a></li>
+				<li><a href="/main.jsp">Home</a></li>
+				<li><a href="/board/board_select.jsp">Board</a></li>
+				<li><a href="/user/user_info.jsp">UserInfo</a></li>
+				<li><a href="/role/role_select.jsp">권한정보</a></li>
+				<li><a href="/cal/cal.jsp">계산기</a></li>
+				<li><a href="/user/logout_ok.jsp"><%=loginStr %></a></li>
 			</ul>
 		</div>
 	</div>

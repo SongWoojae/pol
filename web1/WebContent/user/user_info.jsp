@@ -12,7 +12,13 @@
 <title>Insert title here</title>
 </head>
 <body>
-회원정보 페이지 입니다.
+<div class="container">
+      <div class="starter-template">
+        <h1 >회원정보 페이지 입니다.</h1>
+       
+      </div>
+    </div><!-- /.container -->
+
 </body>
 </html>
  <%@ include file="/common/bottom.jsp"%>

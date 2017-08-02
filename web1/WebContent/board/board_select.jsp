@@ -22,8 +22,7 @@ function doSearch(){
  <%
 	String searchTarget = request.getParameter("searchTarget");
 	String searchStr = request.getParameter("searchStr");
-	Connection con = null
-			;
+	Connection con = null;
 	PreparedStatement ps = null;
 	try{
 		con = DBConn2.getCon();
