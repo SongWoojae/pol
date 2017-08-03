@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ page import="com.google.gson.*"%>
-<%@ page import="java.util.*"%>
-<%@ page import="com.test.common.DBConn2"%>
-<%@ page import="java.sql.*"%>
+    pageEncoding="UTF-8"%>
+<%@ page import="com.google.gson.*" %>
+<%@ page import="java.util.*" %>
+<%@ page import="com.test.common.DBConn2" %>
+<%@ page import="java.sql.*" %>
+
 <%
 Gson g = new Gson();
 HashMap<String,String> hm = g.fromJson(request.getReader(), HashMap.class);
@@ -28,35 +29,31 @@ case "/" :
 	result = num1 / num2;
 	break;
 }
-int insertResult = 0;
-
-Connection con = null;
+Connection con  = null;
 PreparedStatement ps = null;
-
-
+int insertResult =0;
 try{
-	 con = DBConn2.getCon();
-	String sql ="insert into cal(num1,op,num2,result) values(?,?,?,?)";
-	 ps = con.prepareStatement(sql);
+	con  = DBConn2.getCon();
+	String sql = "insert into cal(num1, op, num2, result) values(?,?,?,?)";
+	ps = con.prepareStatement(sql);
 	ps.setInt(1,num1);
-	ps.setString(2, op);
-	ps.setInt(3, num2);
-	ps.setInt(4, result);
+	ps.setString(2,op);
+	ps.setInt(3,num2);
+	ps.setInt(4,result);
 	insertResult = ps.executeUpdate();
-	
+	if(insertResult==1){
 		con.commit();
-	
+	}
 }catch(Exception e){
-	out.println(e);	
+	out.println(e);
 }finally{
-	
 	ps.close();
-	con.close();
 	DBConn2.closeCon();
 }
 
 HashMap<String, Integer> resultMap = new HashMap<String,Integer>();
 resultMap.put("num", result);
+resultMap.put("insert",insertResult);
 String json = g.toJson(resultMap);
 System.out.println(json);
 out.print(json);
