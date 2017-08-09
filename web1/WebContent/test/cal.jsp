@@ -8,15 +8,11 @@
 			class="table table-bordered table-hover">
 			<thead>
 				<tr>
-					<th data-field="ginum"  class="text-center">번호</th>
-					<th data-field="viname"  class="text-center">회사 이름</th>
-					<th data-field="videsc"  class="text-center">회사 구분</th>
-					<th data-field="viaddress"  class="text-center">주소</th>
-					<th data-field="viphone"  class="text-center">전화번호</th>
-					<th data-field="vicredat"  class="text-center">날짜</th>
-					<th data-field="vicretim"  class="text-center">시간</th>					
-					<th data-field="giname"  class="text-center">차종</th>
-					<th data-field="gidesc"  class="text-center">구분</th>
+					<th data-field="ginum" class="text-center">상품번호</th>
+				<th data-field="giname" class="text-center">상품이름</th>
+				<th data-field="gidesc" class="text-center">상품설명</th>
+				<th data-field="vinum" class="text-center">생산자번호</th>
+				<th data-field="viname" class="text-center">생산자이름</th>
 				</tr>
 			</thead>
 			<tbody id="result_tbody">
@@ -35,10 +31,9 @@
 
 	
 <script>
-var thisBlockCnt=0;
+var thisBlockCnt = 0;
 var thisNowPage = 0;
 var thisTotalPage = 0;
-
 function callback(results){
 	var vendorList = results.vendorList;
 	var goodsList = results.goodsList;
@@ -47,7 +42,7 @@ function callback(results){
 	
 	var blockCnt = new Number(pageInfo.blockCnt);
 	thisBlockCnt = blockCnt;
-	var nowPage = new Number(pageInfo.nowPage);
+	var nowPage= new Number(pageInfo.nowPage);
 	thisNowPage = nowPage;
 	var startBlock = Math.floor((nowPage-1)/blockCnt) * 10+1;
 	var endBlock = startBlock+blockCnt-1;
@@ -56,7 +51,8 @@ function callback(results){
 	if(endBlock>totalPageCnt){
 		endBlock = totalPageCnt;
 	}
-	setPagination(startBlock, endBlock, nowPage,"page");
+	
+	setPagination(startBlock, endBlock, pageInfo.nowPage,totalPageCnt, "page");
 	
 	for(var i=0, max=vendorList.length;i<max;i++){
 		$("#s_vendor").append("<option value='" + vendorList[i].vinum + "'>"+vendorList[i].viname +"</option>")
@@ -70,10 +66,10 @@ function callback(results){
 $(document).ready(function(){
 	var params = {};
 	params["nowPage"] = "1";
-	goPage(params, "/cal/vendor_select.jsp", callback);
+	goPage(params, "/test/vendor_select.jsp", callback);
 });
 function setEvent(){
-	$("ul[class='pagination']>li>a").click(function(){
+	$("ul[class='pagination']>li:not([class='disabled'])>a").click(function(){
 		var goPageNum = new Number(this.innerHTML);
 		if(isNaN(goPageNum)){
 			if(this.innerHTML=="◀"){
@@ -94,7 +90,7 @@ function setEvent(){
 		}
 		var params = {};
 		params["nowPage"] = "" + goPageNum;
-		goPage(params, "/cal/vendor_select.jsp", callback);
+		goPage(params, "/test/vendor_select.jsp", callback);
 	})
 }
 

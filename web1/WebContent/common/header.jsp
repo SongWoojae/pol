@@ -1,8 +1,7 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-	
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -48,7 +47,7 @@ String loginStr = "로그인";
 if(login){
 	loginStr = "로그아웃";
 }
-String version = "1.2.1";
+String version = "1.3.2";
 %>
 <script src="<%=rootPath%>/js/jquery-3.2.1.js?version=<%=version%>"></script>
 <script src="<%=rootPath%>/ui/btsp3.7.7/js/bootstrap.min.js?version=<%=version%>"></script>
@@ -57,15 +56,17 @@ String version = "1.2.1";
 <link rel="stylesheet" href="<%=rootPath%>/ui/btsp3.7.7/css/bootstrap.min.css?version=<%=version%>"/>
 <link rel="stylesheet" href="<%=rootPath%>/ui/btsp3.7.7/css/bootstrap-table.css?version=<%=version%>"/>
 <link rel="stylesheet" href="<%=rootPath%>/ui/common.css?version=<%=version%>"/>
-
 <script>
-var sBlockStr = "<li><a>◀◀</a></li>";
-sBlockStr += "<li><a>◀</a></li>";
-var eBlockStr = "<li><a>▶</a></li>";
-eBlockStr += "<li><a>▶▶</a></li>";
 
-function setPagination(sNum, eNum, nPage, objId){
-	var pageStr = sBlockStr;
+function setPagination(sNum, eNum, nPage, nTotal, objId){
+	var pageStr = "";
+	if(nPage==1){
+		pageStr += "<li class='disabled'><a >◀◀</a></li>";
+		pageStr += "<li class='disabled' ><a >◀</a></li>";
+	}else{ 
+		pageStr += "<li><a>◀◀</a></li>";
+		pageStr += "<li><a>◀</a></li>";
+	}
 	for(var i=sNum, max=eNum;i<=max;i++){
 		if(i==nPage){
 			pageStr += "<li class='active'><a>" + i + "</a></li>";
@@ -73,7 +74,14 @@ function setPagination(sNum, eNum, nPage, objId){
 			pageStr += "<li><a>" + i + "</a></li>";
 		}
 	}
-	pageStr += eBlockStr;
+	if(nPage==nTotal){
+		pageStr += "<li class='disabled'><a>▶</a></li>";
+		pageStr += "<li class='disabled'><a>▶▶</a></li>";
+	}else{ 
+		pageStr += "<li><a>▶</a></li>";
+		pageStr += "<li><a>▶▶</a></li>";
+	}
+
 	$("#" + objId).html(pageStr);
 }
 
@@ -87,15 +95,16 @@ function doMovePage(pageId){
 	if(pageId=="board"){
 		url += "/board/board_select.jsp";
 	}else if(pageId=="main"){
-		url += "/main.jsp";
+		url += "/";
 	}else if(pageId=="insertBoard"){
 		url += "/board/board_insert.jsp";
-	}else if(pageId=="insertJson"){
-		url += "/cal/json_insert.jsp";
 	}
 	location.href=url;
 }
 
+function alertOp(){
+	alert($("#op").val());
+}
 function goPage(pParams, pUrl, pCallBackFunc){
 	var params = JSON.stringify(pParams);
 	$.ajax({ 
@@ -116,7 +125,6 @@ function goPage(pParams, pUrl, pCallBackFunc){
 	});
 }
 </script>
-
 <div class="container">
 	<div class="page-header">				
 			<ul class="nav nav-tabs" >
@@ -124,7 +132,7 @@ function goPage(pParams, pUrl, pCallBackFunc){
 				<li><a href="/board/board_select.jsp">Board</a></li>
 				<li><a href="/user/user_info.jsp">UserInfo</a></li>
 				<li><a href="/role/role_select.jsp">권한정보</a></li>
-				<li><a href="/cal/cal.jsp">계산기</a></li>
+				<li><a href="/test/cal.jsp">계산기</a></li>
 				<li><a href="/user/logout_ok.jsp"><%=loginStr %></a></li>
 			</ul>
 		</div>
