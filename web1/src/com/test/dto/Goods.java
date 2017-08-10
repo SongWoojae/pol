@@ -1,28 +1,31 @@
 package com.test.dto;
 
-public class Goods {
-	
+public class Goods{
+
 	private int giNum;
 	private String giName;
 	private String giDesc;
 	private int viNum;
 	private String viName;
-	private String viList;
-	
-	
-	
-	@Override
-	public String toString() {
-		return "Goods [giNum=" + giNum + ", giName=" + giName + ", giDesc=" + giDesc + ", viNum=" + viNum + ", viName="
-				+ viName + ", viList=" + viList + "]";
+	private String command;
+	private Page page;
+
+	public Page getPage() {
+		return page;
 	}
-	public String getViList() {
-		return viList;
+
+	public void setPage(Page page) {
+		this.page = page;
 	}
-	public void setViList(String viList) {
-		this.viList = viList;
+
+	public String getCommand() {
+		return command;
 	}
-	
+
+	public void setCommand(String command) {
+		this.command = command;
+	}
+
 	public int getGiNum() {
 		return giNum;
 	}
@@ -53,7 +56,9 @@ public class Goods {
 	public void setViName(String viName) {
 		this.viName = viName;
 	}
-	
-	
-
+	@Override
+	public String toString() {
+		return "Goods [giNum=" + giNum + ", giName=" + giName + ", giDesc=" + giDesc + ", viNum=" + viNum + ", viName="
+				+ viName + ", command=" + command + ", page=" + page + "]";
+	}
 }

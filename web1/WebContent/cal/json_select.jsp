@@ -5,7 +5,7 @@
 <%@ page import="com.test.common.DBConn2"%>
 <%@ page import="com.google.gson.*"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.test.dto.JsonInfo"%>
+
 <%
     Gson g = new Gson();
     HashMap<String,String> hm = g.fromJson(request.getReader(), HashMap.class);

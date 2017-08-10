@@ -58,11 +58,22 @@ String version = "1.3.2";
 <link rel="stylesheet" href="<%=rootPath%>/ui/common.css?version=<%=version%>"/>
 <script>
 
-function setPagination(sNum, eNum, nPage, nTotal, objId){
+Number.prototype.equals = function(obj){
+	if(obj instanceof Number){
+		return this.toString() == obj.toString();
+	}
+	return this==obj;
+}
+
+function setPagination(pageInfo, objId){
+	var sNum = pageInfo.startBlock;
+	var eNum = pageInfo.endBlock;
+	var nPage = pageInfo.nowPage
+	var nTotal = pageInfo.totalPageCnt;
 	var pageStr = "";
 	if(nPage==1){
-		pageStr += "<li class='disabled'><a >◀◀</a></li>";
-		pageStr += "<li class='disabled' ><a >◀</a></li>";
+		pageStr += "<li class='disabled'><a>◀◀</a></li>";
+		pageStr += "<li class='disabled' ><a>◀</a></li>";
 	}else{ 
 		pageStr += "<li><a>◀◀</a></li>";
 		pageStr += "<li><a>◀</a></li>";
@@ -74,14 +85,13 @@ function setPagination(sNum, eNum, nPage, nTotal, objId){
 			pageStr += "<li><a>" + i + "</a></li>";
 		}
 	}
-	if(nPage==nTotal){
+	if(nPage.equals(nTotal)){
 		pageStr += "<li class='disabled'><a>▶</a></li>";
 		pageStr += "<li class='disabled'><a>▶▶</a></li>";
 	}else{ 
 		pageStr += "<li><a>▶</a></li>";
 		pageStr += "<li><a>▶▶</a></li>";
 	}
-
 	$("#" + objId).html(pageStr);
 }
 

@@ -3,8 +3,6 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*"%>
 <%@ page import="com.test.common.DBConn2"%>
-<%@ page import="com.test.dto.JsonInfo"%>
-
 
 <%
 String Num = request.getParameter("num");
