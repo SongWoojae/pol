@@ -32,7 +32,7 @@ function callback(){
 	alert(result,giDesc);
 	}
 }
-goPage(testParam, "/test.goods", callback);
+movePageWithAjax(testParam, "/test.goods", callback);
 </script>
 </body>
 </html>

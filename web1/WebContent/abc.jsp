@@ -109,7 +109,7 @@ $(document).ready(function(){
 $.ajax(a);
 });
 
-function goPage(page){
+function movePageWithAjax(page){
 	var params = {};
 	params["nowPage"] = page; 
 	params = JSON.stringify(params);
@@ -167,7 +167,7 @@ $.ajax(a);
 }
 function setEvent(){
 $("ul[class='pagination']>li>a").click(function(){	
-	goPage(this.innerHTML);
+	movePageWithAjax(this.innerHTML);
 	})
 }
 
