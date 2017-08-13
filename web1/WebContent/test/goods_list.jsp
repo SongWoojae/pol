@@ -32,38 +32,59 @@
 <script>
 
 var pageInfo = {};
-$("#searchGoods").click(function(){
-	var giName = $("#giName").val();
-	var viNum = $("$s_vendor").val();
+$("#searchGoods").click(function() {
+	var giName = $("#giName").val().trim();
+	var viNum = $("#s_vendor").val().trim();
+	if(giName=="" && viNum==""){
+		alert("회사 선택이나 제품명을 입력해주세요.");
+		return;
+	}
 	var params = {};
-	params["giName"] = giName;
-	params["viNum"] = viNum;
+	if(giName!=""){
+		params["giName"] = giName;
+	}
+	if(viNum!=""){
+		params["viNum"] = viNum;
+	}
 	params["command"] = "list";
 	var page = {};
 	page["nowPage"] = "1";
 	params["page"] = page;
-	movepageWithAjax(params, "/list.goods", callback);
-	
-})
-function callback(results){
+	movePageWithAjax(params, "/list.goods", callback);
+});
+
+function callback(results) {
 	var goodsList = results.list;
 	pageInfo = results.page;
 	var vendorList = results.vendorList;
+	var search = results.search;
 	var selStr = "<option value=''>회사선택</option>";
-	for(var i=0, max = vendorList.length; i<max; i++){
+	for (var i = 0, max = vendorList.length; i < max; i++) {
 		var vendor = vendorList[i];
-		selStr += "<option value='" + vendor.viNum + "'>" + vendor.viName
+		var selectStr = "";
+		if(search.viNum==vendor.viNum){
+			selectStr = "selected";
+		}
+		selStr += "<option value='" + vendor.viNum + "' " + selectStr + ">" + vendor.viName
 				+ "</option>";
 	}
 	$("#s_vendor").html(selStr);
-	makePagination(pageInfo, "page");
-	setEvent(pageInfo, "/list.goods");
-    $('#table').bootstrapTable('destroy');
-    $('#table').bootstrapTable({
-        data: goodsList
-    });
+	var params = {};
+	if(search.viNum!=0){
+		params["viNum"] = search.viNum;
+	}
+	if(search.giName){
+		params["giName"] = search.giName;
+	}
+	makePagination(pageInfo,"page");
+	setEvent(pageInfo,params , "/list.goods");
+	$('#table').bootstrapTable('destroy');
+	$('#table').bootstrapTable({
+		data : goodsList
+	});
 }
-$(document).ready(function(){
+
+$(document).ready(function() {
 	var page = {};
 	page["nowPage"] = "1";
 	var params = {};

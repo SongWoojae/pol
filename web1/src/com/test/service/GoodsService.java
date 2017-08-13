@@ -13,8 +13,7 @@ import com.test.dto.Page;
 import com.test.dto.Vendor;
 
 public class GoodsService {
-
-	public List<Vendor> selectVendorList(){
+	public List<Vendor> selectVendorsList(){
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -44,21 +43,38 @@ public class GoodsService {
 		}
 		return null;
 	}
-	public List<Goods>	selectGoodsList(Goods pGoods){
+	public List<Goods> selectGoodsList(Goods pGoods){
 		Connection con = null;
 		PreparedStatement ps = null;
-		
-		try{
-			String sql = "select gi.ginum, gi.giname, gi.gidesc, vi.vinum, vi.viname"
-					+ " from goods_info as gi, vendor_info as vi"
-					+ " where gi.vinum=vi.vinum"
-					+ " order by gi.ginum"
-					+ " limit ?,?";
+		try {
+			String sql = "select gi.ginum, gi.giname, gi.gidesc, vi.vinum, vi.viname "
+					+ " from goods_info as gi, vendor_info as vi "
+					+ " where gi.vinum=vi.vinum";
+
+			int idx=0;
+			if(pGoods.getViNum()!=0){
+				sql += " and gi.vinum=?";
+				idx++;
+			}
+			if(pGoods.getGiName()!=null){
+				sql += " and gi.giname=?";
+				idx++;
+			}
+			sql += " order by gi.ginum";
+			sql += " limit ?,?";
 			Page page = pGoods.getPage();
 			con = DBConn2.getCon();
 			ps = con.prepareStatement(sql);
-			ps.setInt(1, page.getStartRow()); 
-			ps.setInt(2, page.getRowCnt());
+			if(pGoods.getViNum()!=0 && pGoods.getGiName()==null){
+				ps.setInt(1, pGoods.getViNum());
+			}else if(pGoods.getGiName()!=null && pGoods.getViNum()==0){
+				ps.setString(1, pGoods.getGiName());
+			}else if(pGoods.getGiName()!=null && pGoods.getViNum()!=0 ){
+				ps.setInt(1, pGoods.getViNum());
+				ps.setString(2, pGoods.getGiName());
+			}
+			ps.setInt(++idx, page.getStartRow()); 
+			ps.setInt(++idx, page.getRowCnt());
 			ResultSet rs = ps.executeQuery();
 			List<Goods> goodsList = new ArrayList<Goods>();
 			while(rs.next()){
@@ -84,9 +100,7 @@ public class GoodsService {
 			}
 		}
 		return null;
-			
-		}
-	
+	}
 
 	public int getTotalCount(Goods pGoods){
 		Connection con = null;
@@ -95,7 +109,7 @@ public class GoodsService {
 			String sql = "select count(1) "
 					+ " from goods_info as gi, vendor_info as vi "
 					+ " where gi.vinum=vi.vinum";
-			if(pGoods.getViNum() != 0){
+			if(pGoods.getViNum()!=0){
 				sql += " and gi.vinum=?";
 			}
 			if(pGoods.getGiName()!=null){
@@ -103,8 +117,16 @@ public class GoodsService {
 			}
 			con = DBConn2.getCon();
 			ps = con.prepareStatement(sql);
+			if(pGoods.getViNum()!=0 && pGoods.getGiName()==null){
+				ps.setInt(1, pGoods.getViNum());
+			}else if(pGoods.getGiName()!=null && pGoods.getViNum()==0){
+				ps.setString(1, pGoods.getGiName());
+			}else if(pGoods.getGiName()!=null && pGoods.getViNum()!=0 ){
+				ps.setInt(1, pGoods.getViNum());
+				ps.setString(2, pGoods.getGiName());
+			}
+			
 			ResultSet rs = ps.executeQuery();
-			List<Goods> goodsList = new ArrayList<Goods>();
 			while(rs.next()){
 				return rs.getInt(1);
 			}
