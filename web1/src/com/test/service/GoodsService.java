@@ -101,6 +101,97 @@ public class GoodsService {
 		}
 		return null;
 	}
+	public int deleteGoods(Goods pGoods){
+		Connection con = null;
+		PreparedStatement ps = null;
+		try{
+			String sql = "delete from goods_info where ginum=?";
+			con = DBConn2.getCon();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, pGoods.getGiNum());
+			int result = ps.executeUpdate();
+			con.commit();
+			return result;
+		}catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				ps.close();
+				DBConn2.closeCon();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return 0;
+	}
+	
+	public int insertGoods(Goods pGoods){
+		Connection con = null;
+		PreparedStatement ps = null;
+		try{
+			String sql = "insert into goods_info(ginum,giname,gidecs,vinum,viname)";
+			sql += "values(?,?,?,?,?)";
+			con = DBConn2.getCon();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, pGoods.getGiNum());
+			ps.setString(2, pGoods.getGiName());
+			ps.setString(3, pGoods.getGiDesc());
+			ps.setInt(4, pGoods.getViNum());
+			ps.setString(5, pGoods.getViName());
+			int result = ps.executeUpdate();
+			con.commit();
+			return result;
+		}catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				ps.close();
+				DBConn2.closeCon();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return 0;
+	}
+	
+	public Goods selectGoods(Goods pGoods){
+		Connection con = null;
+		PreparedStatement ps = null;
+		try {
+			String sql = "select gi.ginum, gi.giname, gi.gidesc, vi.vinum, vi.viname "
+					+ " from goods_info as gi, vendor_info as vi "
+					+ " where gi.vinum=vi.vinum and gi.ginum=?";
+			con = DBConn2.getCon();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, pGoods.getGiNum());
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				Goods goods = new Goods();
+				goods.setGiNum(rs.getInt("ginum"));
+				goods.setGiName(rs.getString("giname"));
+				goods.setGiDesc(rs.getString("gidesc"));
+				goods.setViNum(rs.getInt("vinum"));
+				goods.setViName(rs.getString("viname"));
+				return goods;
+			}
+		}catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				ps.close();
+				DBConn2.closeCon();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
 
 	public int getTotalCount(Goods pGoods){
 		Connection con = null;

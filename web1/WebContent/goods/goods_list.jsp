@@ -1,8 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ include file="/common/header.jsp"%>
 
-	<div class="container">
+<div class="container">
+	<div class="container" style="text-align: center; padding-top: 20px;padding-bottom: 20px;">
+		<select id="s_vendor" class="selectpicker">
+		</select> 
+		<label>상품이름 : </label> <input type="text" id="giName" /> 
+		<input type="button" id="searchGoods" value="검색" />
+		<input type="button" id="btnInsert" value="등록" align="right"/>
+	</div>
 	<table id="table" data-height="460"
 		class="table table-bordered table-hover">
 		<thead>
@@ -17,19 +24,21 @@
 		<tbody id="result_tbody">
 		</tbody>
 	</table>
+
 </div>
 <div class="jb-center" style="text-align: center">
 	<ul class="pagination" id="page">
 	</ul>
-</div>
-<select id="s_vendor">
-<option value="">회사선택</option>
-</select> 
-검색어
-<input type="text" id="giName" />
-<input type="button" id="searchGoods" value="제품명검색" />
-<div id="result_div" class="container"></div>
+	</div>
+
 <script>
+var pageInfo = {};
+var nowPage = "<%=request.getParameter("nowPage")%>";
+
+if(nowPage=="null"){
+	nowPage = "1";
+}
+
 
 var pageInfo = {};
 $("#searchGoods").click(function() {
@@ -39,6 +48,8 @@ $("#searchGoods").click(function() {
 		alert("회사 선택이나 제품명을 입력해주세요.");
 		return;
 	}
+	$("#btnInsert").click(function(){
+		location.href="/goods/goods_insert.jsp?nowPage=" + <%=request.getParameter("nowPage")%> + "&giNum=" + <%=request.getParameter("giNum")%>
 	var params = {};
 	if(giName!=""){
 		params["giName"] = giName;
@@ -79,19 +90,49 @@ function callback(results) {
 	makePagination(pageInfo,"page");
 	setEvent(pageInfo,params , "/list.goods");
 	$('#table').bootstrapTable('destroy');
-	$('#table').bootstrapTable({
-		data : goodsList
-	});
+	var resultStr = "";
+	for(var i=0, max=goodsList.length;i<max;i++){
+		var goods = goodsList[i];
+		resultStr += "<tr data-view='" + goods.giNum + "'>";
+		resultStr +="<td class='text-center'>" + goods.giNum + "</td>";
+		resultStr +="<td class='text-center'>" + goods.giName + "</td>";
+		resultStr +="<td class='text-center'>" + goods.giDesc + "</td>";
+		resultStr +="<td class='text-center'>" + goods.viNum + "</td>";
+		resultStr +="<td class='text-center'>" + goods.viName + "</td>";
+		resultStr +="</tr>";
+	}
+	$('#result_tbody').html(resultStr);
+	$("tbody[id='result_tbody']>tr[data-view]").click(function(){
+		var params = {};
+		params["giNum"] = this.getAttribute("data-view");
+		params["command"] = "view";
+		var page = {};
+		page["nowPage"] = pageInfo.nowPage;
+		params["page"] = page;
+		movePageWithAjax(params, "/list.goods", callBackView);
+		
+	})
 }
+function callBackView(result){
+	var url = result.url + "?nowPage=" + result.page.nowPage + "&giNum=" + result.goods.giNum;
+	url += "&giName=" + result.goods.giName;
+	url += "&giDesc=" + result.goods.giDesc;
+	url += "&viNum=" + result.goods.viNum;
+	url += "&viName=" + result.goods.viName;
+	location.href=url;
+}
+
 
 $(document).ready(function() {
 	var page = {};
-	page["nowPage"] = "1";
+	page["nowPage"] = nowPage;
 	var params = {};
 	params["page"] = page;
 	params["command"] = "list";
 	movePageWithAjax(params, "/list.goods", callback);
 });
+
+
 
 
 </script>
