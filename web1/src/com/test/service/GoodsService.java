@@ -131,15 +131,14 @@ public class GoodsService {
 		Connection con = null;
 		PreparedStatement ps = null;
 		try{
-			String sql = "insert into goods_info(ginum,giname,gidecs,vinum,viname)";
-			sql += "values(?,?,?,?,?)";
+			String sql = "insert into goods_info(giname, gidesc, vinum, gicredat, gicretim)";
+			sql += "values(?,?,?,DATE_FORMAT(NOW(),'%Y%m%d'), DATE_FORMAT(NOW(),'%H%i%s'))";
 			con = DBConn2.getCon();
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, pGoods.getGiNum());
 			ps.setString(2, pGoods.getGiName());
 			ps.setString(3, pGoods.getGiDesc());
-			ps.setInt(4, pGoods.getViNum());
-			ps.setString(5, pGoods.getViName());
+			
 			int result = ps.executeUpdate();
 			con.commit();
 			return result;

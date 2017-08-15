@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,25 +22,34 @@ public class GoodsServlet extends HttpServlet{
 	
 	private static final long serialVersionUID = 1L;
 	private GoodsService gs = new GoodsService();
+	private Gson g = new Gson();
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{	
 		request.setCharacterEncoding("UTF-8");
 		String resultStr = "";
-		doProcess(response, resultStr);
+		String params = request.getParameter("param");
+		Goods goods = g.fromJson(params, Goods.class);
+		String command = goods.getCommand();
+		Page page = goods.getPage();
+		if(command.equals("view")){
+			Goods resultGoods = gs.selectGoods(goods);
+			request.setAttribute("page", page);
+			request.setAttribute("goods", resultGoods);
+			request.setAttribute("url", "/goods/goods_view.jsp");
+			RequestDispatcher rd=request.getRequestDispatcher("/goods/goods_view2.jsp");
+			try{
+				rd.forward(request, response);
+			} catch(ServletException e){
+				e.printStackTrace();
+			}
+		}
 		
 		
-//		Gson g= new Gson();
-//		
-//		HashMap<String, String> hm = g.fromJson(request.getReader(), HashMap.class);
-//		System.out.println(hm);
-//		
-//		String resultStr = g.toJson(hm);
-//		doProcess(response, resultStr);
 	}
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		request.setCharacterEncoding("UTF-8");
-	    Gson g = new Gson();	
+	   
 	   
 //	    Test hm = g.fromJson(request.getReader(), Test.class);
 //	    List<Test> list = new ArrayList<Test>();
