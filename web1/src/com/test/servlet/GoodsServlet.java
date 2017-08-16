@@ -61,7 +61,7 @@ public class GoodsServlet extends HttpServlet{
 	    
 	    
 	    Goods goods = g.fromJson(request.getReader(), Goods.class);
-	    System.out.println(goods);
+	    //System.out.println(goods);
 	    String command = goods.getCommand();
 	    Page page = goods.getPage();
 	    if(command.equals("list")){
@@ -85,6 +85,12 @@ public class GoodsServlet extends HttpServlet{
 	    	String jsonStr = g.toJson(resultMap);
 	    	doProcess(response, jsonStr);
 	    	
+	    }else if(command.equals("vendorlist")){
+	    	List<Vendor> vendorList = gs.selectVendorsList();
+	    	HashMap resultMap = new HashMap();
+	    	resultMap.put("vendorList", vendorList);
+	    	String jsonStr = g.toJson(resultMap);
+	    	doProcess(response, jsonStr);
 	    }else if(command.equals("delete")){
 	    	int result = gs.deleteGoods(goods);
 	    	HashMap resultMap = new HashMap();
@@ -109,6 +115,17 @@ public class GoodsServlet extends HttpServlet{
 	    	}
 	    	String jsonStr = g.toJson(resultMap);
 	    	doProcess(response,jsonStr);
+	    }else if(command.equals("update")){
+	    	int result = gs.updateGoods(goods);
+	    	HashMap resultMap = new HashMap();
+	    	resultMap.put("msg", "수정이 완료되었습니다");
+	    	resultMap.put("url", "/goods/goods_list.jsp");
+	    	if(result!=1){
+	    		resultMap.put("msg", "수정 실패하였습니다.");
+	    		resultMap.put("url", "");
+	    	}
+	    	String jsonStr = g.toJson(resultMap);
+	    	doProcess(response, jsonStr);
 	    }
 	}
 	

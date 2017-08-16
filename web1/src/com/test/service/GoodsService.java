@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import com.test.common.DBConn2;
 import com.test.dto.Goods;
 import com.test.dto.Page;
@@ -135,10 +136,43 @@ public class GoodsService {
 			sql += "values(?,?,?,DATE_FORMAT(NOW(),'%Y%m%d'), DATE_FORMAT(NOW(),'%H%i%s'))";
 			con = DBConn2.getCon();
 			ps = con.prepareStatement(sql);
-			ps.setInt(1, pGoods.getGiNum());
-			ps.setString(2, pGoods.getGiName());
-			ps.setString(3, pGoods.getGiDesc());
+			ps.setString(1, pGoods.getGiName());
+			ps.setString(2, pGoods.getGiDesc());
+			ps.setInt(3, pGoods.getViNum());
 			
+			int result = ps.executeUpdate();
+			con.commit();
+			return result;
+		}catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				ps.close();
+				DBConn2.closeCon();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return 0;
+	}
+	
+	public int updateGoods(Goods pGoods){
+		Connection con = null;
+		PreparedStatement ps = null;
+		try {
+			String sql = "update goods_info";
+			sql += " set giname=?,";
+			sql += " gidesc=?,";
+			sql += " vinum=?";
+			sql += " where ginum=?";
+			con = DBConn2.getCon(); 
+			ps = con.prepareStatement(sql);
+			ps.setString(1, pGoods.getGiName());
+			ps.setString(2, pGoods.getGiDesc());
+			ps.setInt(3, pGoods.getViNum());
+			ps.setInt(4, pGoods.getGiNum());
 			int result = ps.executeUpdate();
 			con.commit();
 			return result;

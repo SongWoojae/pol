@@ -92,6 +92,7 @@ function alertOp(){
 				<li><a href="/board/board_select.jsp">Board</a></li>
 				<li><a href="/user/user_info.jsp">UserInfo</a></li>
 				<li><a href="/role/role_select.jsp">권한정보</a></li>
+				<li><a href="/vendor/vendor_list.jsp">회사정보</a></li>
 				<li><a href="/goods/goods_list.jsp">상품정보</a></li>
 				<li><a href="/user/logout_ok.jsp"><%=loginStr %></a></li>
 			</ul>

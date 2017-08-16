@@ -7,8 +7,7 @@
 		style="text-align: center; padding-top: 20px; padding-bottom: 20px;">
 		<select id="s_vendor" class="selectpicker">
 		</select> <label>상품이름 : </label> <input type="text" id="giName" /> <input
-			type="button" id="searchGoods" value="검색" /> <input type="button"
-			id="btnInsert" value="등록" align="right" />
+			type="button" id="searchGoods" value="검색" />
 	</div>
 	<table id="table" data-height="460"
 		class="table table-bordered table-hover">
@@ -24,7 +23,7 @@
 		<tbody id="result_tbody">
 		</tbody>
 	</table>
-
+	<button id="btnInsert" class="btn btn-primary"  type="button">상품등록</button>
 </div>
 <div class="jb-center" style="text-align: center">
 	<ul class="pagination" id="page">
@@ -33,8 +32,7 @@
 
 <script>
 var pageInfo = {};
-var nowPage = "<%=request.getParameter("nowPage")%>
-	";
+var nowPage = "<%=request.getParameter("nowPage")%>";
 
 	if (nowPage == "null") {
 		nowPage = "1";
