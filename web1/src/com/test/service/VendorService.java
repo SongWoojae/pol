@@ -54,4 +54,95 @@ public class VendorService {
 		}
 		return null;
 	}
+	public int deleteVendor(Vendor pVendor){
+		Connection con = null;
+		PreparedStatement ps = null;
+		try{
+			String sql = "delete from vendor_info where vinum=?";
+			con = DBConn2.getCon();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, pVendor.getViNum());
+			int result = ps.executeUpdate();
+			con.commit();
+			return result;
+		}catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				ps.close();
+				DBConn2.closeCon();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return 0;
+	}
+	public int insertVendor(Vendor pVendor){
+		Connection con = null;
+		PreparedStatement ps = null;
+		try{
+			String sql = "insert into vendor_info(viname, videsc, viaddress, viphone,gicredat, gicretim)";
+			sql += "values(?,?,?,?,DATE_FORMAT(NOW(),'%Y%m%d'), DATE_FORMAT(NOW(),'%H%i%s'))";
+			con = DBConn2.getCon();
+			ps = con.prepareStatement(sql);
+			ps.setString(1, pVendor.getViName());
+			ps.setString(2, pVendor.getViDesc());
+			ps.setString(3, pVendor.getViAddress());
+			ps.setString(4, pVendor.getViPhone());
+			
+			int result = ps.executeUpdate();
+			con.commit();
+			return result;
+		}catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				ps.close();
+				DBConn2.closeCon();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return 0;
+	}
+	public Vendor selectVendor(Vendor pVendor){
+		Connection con = null;
+		PreparedStatement ps = null;
+		try {
+			String sql = "select vinum, viname, videsc, viaddress, viphone ";
+					sql += " from vendor_info";
+					
+			con = DBConn2.getCon();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, pVendor.getViNum());
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				Vendor vendor = new Vendor();
+				vendor.setViNum(rs.getInt("vinum"));
+				vendor.setViName(rs.getString("viname"));
+				vendor.setViDesc(rs.getString("gidesc"));
+				vendor.setViAddress(rs.getString("viaddress"));
+				vendor.setViPhone(rs.getString("viphone"));
+				return vendor;
+	
+				
+			}
+		}catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				ps.close();
+				DBConn2.closeCon();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
 }

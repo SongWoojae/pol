@@ -1,7 +1,7 @@
 package com.test.dto;
 
 public class Vendor {
-	
+
 	private int viNum;
 	private String viName;
 	private String viDesc;
@@ -9,14 +9,11 @@ public class Vendor {
 	private String viPhone;
 	private String viCredat;
 	private String viCretim;
-	private String command;
 	
-	
-	public String getCommand() {
-		return command;
-	}
-	public void setCommand(String command) {
-		this.command = command;
+	@Override
+	public String toString() {
+		return "Vendor [viNum=" + viNum + ", viName=" + viName + ", viDesc=" + viDesc + ", viAddress=" + viAddress
+				+ ", viPhone=" + viPhone + ", viCredat=" + viCredat + ", viCretim=" + viCretim + "]";
 	}
 	public int getViNum() {
 		return viNum;
@@ -60,13 +57,5 @@ public class Vendor {
 	public void setViCretim(String viCretim) {
 		this.viCretim = viCretim;
 	}
-	@Override
-	public String toString() {
-		return "Vendor [viNum=" + viNum + ", viName=" + viName + ", viDesc=" + viDesc + ", viAddress=" + viAddress
-				+ ", viPhone=" + viPhone + ", viCredat=" + viCredat + ", viCretim=" + viCretim + ", command=" + command
-				+ "]";
-	}
-	
-	
 	
 }
