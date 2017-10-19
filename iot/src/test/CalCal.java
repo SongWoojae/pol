@@ -9,7 +9,7 @@ public class CalCal {
 		int result = 0;
 		int[] num = new int[5];
 		
-		for(int i=0; i<=num.length; i++){
+		for(int i=0; i<num.length; i++){
 			System.out.println((i+1) + "번 째 학생의 점수를 입력하세요 ->");
 			String numStr = scan.nextLine();
 			num[i] = Integer.parseInt(numStr);
